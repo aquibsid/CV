@@ -1,161 +1,311 @@
 /* =========================================================
    AQUIB CV WEBSITE
-   Main interactions
-   ========================================================= */
+   Vanilla JavaScript — no external libraries
+========================================================= */
 
 document.documentElement.classList.add("js-ready");
 
+
+/* =========================================================
+   DOM READY
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  const $ = (selector, parent = document) =>
-    parent.querySelector(selector);
+  const header = document.getElementById("site-header");
+  const navLinks = document.getElementById("nav-links");
+  const menuToggle = document.getElementById("menu-toggle");
+  const languageButtons =
+    document.querySelectorAll(".language-btn");
 
-  const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
+  const navItems =
+    document.querySelectorAll(".nav-link");
+
+  const sections =
+    document.querySelectorAll("main section[id]");
+
+  const revealElements =
+    document.querySelectorAll(".reveal");
+
+  const counterElements =
+    document.querySelectorAll("[data-counter]");
+
+  const progressBar =
+    document.querySelector(".scroll-progress");
+
+  const yearElement =
+    document.getElementById("year");
 
 
   /* =======================================================
-     CURRENT YEAR
-     ======================================================= */
-
-  const yearElement = $("#currentYear");
+     YEAR
+  ======================================================= */
 
   if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+    yearElement.textContent =
+      new Date().getFullYear();
   }
 
 
   /* =======================================================
      MOBILE MENU
-     ======================================================= */
+  ======================================================= */
 
-  const menuToggle = $("#menuToggle");
-  const mobileNav = $("#mobileNav");
+  function openMenu() {
 
-  if (menuToggle && mobileNav) {
+    if (!navLinks || !menuToggle) return;
+
+    navLinks.classList.add("open");
+    menuToggle.classList.add("open");
+
+    menuToggle.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    menuToggle.setAttribute(
+      "aria-label",
+      "Close navigation"
+    );
+
+    document.body.classList.add("menu-open");
+  }
+
+
+  function closeMenu() {
+
+    if (!navLinks || !menuToggle) return;
+
+    navLinks.classList.remove("open");
+    menuToggle.classList.remove("open");
+
+    menuToggle.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    menuToggle.setAttribute(
+      "aria-label",
+      "Open navigation"
+    );
+
+    document.body.classList.remove("menu-open");
+  }
+
+
+  if (menuToggle) {
 
     menuToggle.addEventListener("click", () => {
 
-      const isOpen = mobileNav.classList.toggle("open");
+      const isOpen =
+        navLinks.classList.contains("open");
 
-      menuToggle.classList.toggle("active", isOpen);
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-
-      document.body.classList.toggle("menu-open", isOpen);
-    });
-
-
-    $$("#mobileNav a").forEach(link => {
-
-      link.addEventListener("click", () => {
-
-        mobileNav.classList.remove("open");
-        menuToggle.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
-
-        document.body.classList.remove("menu-open");
-      });
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
 
     });
+
+  }
+
+
+  /* CLOSE AFTER NAVIGATION */
+
+  navItems.forEach((link) => {
+
+    link.addEventListener("click", () => {
+
+      if (
+        window.innerWidth <= 760
+      ) {
+        closeMenu();
+      }
+
+    });
+
+  });
+
+
+  /* CLOSE WITH ESCAPE */
+
+  document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+
+  });
+
+
+  /* CLOSE WHEN CLICKING OUTSIDE */
+
+  document.addEventListener("click", (event) => {
+
+    if (!navLinks || !menuToggle) return;
+
+    if (
+      window.innerWidth <= 760 &&
+      navLinks.classList.contains("open") &&
+      !navLinks.contains(event.target) &&
+      !menuToggle.contains(event.target)
+    ) {
+      closeMenu();
+    }
+
+  });
+
+
+  /* =======================================================
+     HEADER SCROLL STATE
+  ======================================================= */
+
+  function updateHeader() {
+
+    if (!header) return;
+
+    if (window.scrollY > 30) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+
   }
 
 
   /* =======================================================
      SCROLL PROGRESS
-     ======================================================= */
+  ======================================================= */
 
-  const scrollProgress = $("#scrollProgress");
+  function updateProgress() {
 
-  const updateScrollProgress = () => {
-
-    if (!scrollProgress) return;
-
-    const scrollTop = window.scrollY;
+    if (!progressBar) return;
 
     const documentHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+    if (documentHeight <= 0) {
+      progressBar.style.width = "0%";
+      return;
+    }
 
     const progress =
-      documentHeight > 0
-        ? (scrollTop / documentHeight) * 100
-        : 0;
+      (window.scrollY / documentHeight) * 100;
 
-    scrollProgress.style.width = `${progress}%`;
-  };
+    progressBar.style.width =
+      `${Math.min(progress, 100)}%`;
 
-  window.addEventListener("scroll", updateScrollProgress, {
-    passive: true
-  });
-
-  updateScrollProgress();
+  }
 
 
   /* =======================================================
-     HEADER SHADOW
-     ======================================================= */
+     ACTIVE NAVIGATION
+  ======================================================= */
 
-  const header = $("#siteHeader");
+  function updateActiveNav() {
 
-  const updateHeader = () => {
+    if (!sections.length) return;
 
-    if (!header) return;
+    const scrollPosition =
+      window.scrollY + 180;
 
-    header.classList.toggle(
-      "scrolled",
-      window.scrollY > 20
-    );
-  };
+    let currentSection = "home";
 
-  window.addEventListener("scroll", updateHeader, {
-    passive: true
-  });
+    sections.forEach((section) => {
 
-  updateHeader();
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
 
+      if (
+        scrollPosition >= top &&
+        scrollPosition < top + height
+      ) {
+        currentSection = section.id;
+      }
 
-  /* =======================================================
-     SCROLL REVEAL
-     ======================================================= */
-
-  const revealElements = $$(".reveal");
-
-  const reducedMotion =
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (reducedMotion) {
-
-    revealElements.forEach(element => {
-      element.classList.add("visible");
     });
 
-  } else if ("IntersectionObserver" in window) {
+    navItems.forEach((link) => {
 
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+      const target =
+        link.getAttribute("data-section");
 
-        entries.forEach(entry => {
+      link.classList.toggle(
+        "active",
+        target === currentSection
+      );
 
-          if (!entry.isIntersecting) return;
+    });
 
-          entry.target.classList.add("visible");
+  }
 
-          observer.unobserve(entry.target);
-        });
 
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px"
-      }
-    );
+  /* =======================================================
+     SCROLL HANDLER
+  ======================================================= */
 
-    revealElements.forEach(element => {
+  function handleScroll() {
+
+    updateHeader();
+    updateProgress();
+    updateActiveNav();
+
+  }
+
+  window.addEventListener(
+    "scroll",
+    handleScroll,
+    { passive: true }
+  );
+
+  handleScroll();
+
+
+  /* =======================================================
+     REVEAL ANIMATION
+  ======================================================= */
+
+  if (
+    "IntersectionObserver" in window
+  ) {
+
+    const revealObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+
+          entries.forEach((entry) => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add(
+              "visible"
+            );
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.12,
+          rootMargin: "0px 0px -40px 0px"
+        }
+      );
+
+
+    revealElements.forEach((element) => {
       revealObserver.observe(element);
     });
 
   } else {
 
-    revealElements.forEach(element => {
+    revealElements.forEach((element) => {
       element.classList.add("visible");
     });
 
@@ -164,340 +314,313 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =======================================================
      COUNTERS
-     ======================================================= */
+  ======================================================= */
 
-  const counters = $$(".counter");
+  function animateCounter(element) {
 
-  const animateCounter = element => {
+    const target =
+      Number(
+        element.getAttribute("data-counter")
+      );
 
-    const target = Number(element.dataset.target || 0);
-    const suffix = element.dataset.suffix || "";
-
-    if (reducedMotion) {
-      element.textContent = `${target}${suffix}`;
+    if (
+      !Number.isFinite(target)
+    ) {
       return;
     }
 
     const duration = 1200;
-    const startTime = performance.now();
 
-    const update = currentTime => {
+    const startTime =
+      performance.now();
 
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+
+    function updateCounter(currentTime) {
+
+      const elapsed =
+        currentTime - startTime;
+
+      const progress =
+        Math.min(
+          elapsed / duration,
+          1
+        );
 
       const eased =
-        1 - Math.pow(1 - progress, 3);
+        1 - Math.pow(
+          1 - progress,
+          3
+        );
 
-      const current =
+      const currentValue =
         Math.round(target * eased);
 
-      element.textContent = `${current}${suffix}`;
+      element.textContent =
+        currentValue.toString();
 
       if (progress < 1) {
-        requestAnimationFrame(update);
+        requestAnimationFrame(
+          updateCounter
+        );
       }
 
-    };
+    }
 
-    requestAnimationFrame(update);
-  };
-
-
-  if ("IntersectionObserver" in window) {
-
-    const counterObserver = new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (!entry.isIntersecting) return;
-
-          animateCounter(entry.target);
-          counterObserver.unobserve(entry.target);
-        });
-
-      },
-      {
-        threshold: .7
-      }
+    requestAnimationFrame(
+      updateCounter
     );
 
-    counters.forEach(counter => {
+  }
+
+
+  if (
+    "IntersectionObserver" in window
+  ) {
+
+    const counterObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+
+          entries.forEach((entry) => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            animateCounter(
+              entry.target
+            );
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.6
+        }
+      );
+
+
+    counterElements.forEach((counter) => {
       counterObserver.observe(counter);
     });
 
   } else {
 
-    counters.forEach(counter => {
-      animateCounter(counter);
-    });
-
-  }
-
-
-  /* =======================================================
-     ACTIVE NAVIGATION
-     ======================================================= */
-
-  const sections = $$("main section[id]");
-  const navLinks = $$(".desktop-nav a");
-
-  if ("IntersectionObserver" in window) {
-
-    const navObserver = new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (!entry.isIntersecting) return;
-
-          const id = entry.target.id;
-
-          navLinks.forEach(link => {
-
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") === `#${id}`
-            );
-
-          });
-
-        });
-
-      },
-      {
-        rootMargin: "-35% 0px -55% 0px",
-        threshold: 0
-      }
-    );
-
-    sections.forEach(section => {
-      navObserver.observe(section);
-    });
-  }
-
-
-  /* =======================================================
-     HSE FILTERS
-     ======================================================= */
-
-  const filterButtons = $$(".filter-btn");
-  const skillCards = $$(".skill-card");
-
-  filterButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const filter = button.dataset.filter;
-
-      filterButtons.forEach(item => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
-      skillCards.forEach(card => {
-
-        const category = card.dataset.category;
-
-        const shouldShow =
-          filter === "all" ||
-          category === filter;
-
-        card.classList.toggle(
-          "hidden",
-          !shouldShow
+    counterElements.forEach((counter) => {
+      counter.textContent =
+        counter.getAttribute(
+          "data-counter"
         );
-
-      });
-
     });
 
-  });
+  }
 
 
   /* =======================================================
-     LANGUAGE SWITCHER
-     ======================================================= */
+     LANGUAGE SYSTEM
+  ======================================================= */
 
-  const languageButtons = $$(".lang-btn");
+  const translations = {
 
-  const translatableElements =
-    $$("[data-en][data-ar]");
+    en: {
+      "Home": "Home",
+      "About": "About",
+      "Experience": "Experience",
+      "Capabilities": "Capabilities",
+      "Projects": "Projects",
+      "Education": "Education",
+      "Contact": "Contact"
+    },
 
-  const setLanguage = language => {
-
-    const isArabic = language === "ar";
-
-    document.documentElement.lang =
-      isArabic ? "ar" : "en";
-
-    document.documentElement.dir =
-      isArabic ? "rtl" : "ltr";
-
-    translatableElements.forEach(element => {
-
-      const translation =
-        isArabic
-          ? element.dataset.ar
-          : element.dataset.en;
-
-      if (translation) {
-        element.textContent = translation;
-      }
-
-    });
-
-    languageButtons.forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.lang === language
-      );
-
-    });
-
-    try {
-      localStorage.setItem(
-        "aquib-language",
-        language
-      );
-    } catch (error) {
-      /* localStorage may be unavailable */
+    ar: {
+      "Home": "الرئيسية",
+      "About": "نبذة",
+      "Experience": "الخبرة",
+      "Capabilities": "المهارات",
+      "Projects": "المشاريع",
+      "Education": "التعليم",
+      "Contact": "تواصل"
     }
+
   };
 
 
-  languageButtons.forEach(button => {
+  function setLanguage(language) {
 
-    button.addEventListener("click", () => {
+    const selectedLanguage =
+      language === "ar"
+        ? "ar"
+        : "en";
 
-      const language =
-        button.dataset.lang || "en";
+    document.documentElement.lang =
+      selectedLanguage;
 
-      setLanguage(language);
+    document.documentElement.dir =
+      selectedLanguage === "ar"
+        ? "rtl"
+        : "ltr";
+
+
+    /* Elements with explicit translations */
+
+    document
+      .querySelectorAll("[data-en][data-ar]")
+      .forEach((element) => {
+
+        const value =
+          element.getAttribute(
+            `data-${selectedLanguage}`
+          );
+
+        if (value !== null) {
+          element.textContent = value;
+        }
+
+      });
+
+
+    /* Navigation */
+
+    navItems.forEach((link) => {
+
+      const englishText =
+        link.getAttribute("data-en-text") ||
+        link.textContent.trim();
+
+      if (!link.getAttribute("data-en-text")) {
+        link.setAttribute(
+          "data-en-text",
+          englishText
+        );
+      }
+
+      const translated =
+        translations[selectedLanguage][
+          englishText
+        ];
+
+      if (translated) {
+        link.textContent = translated;
+      }
+
     });
+
+
+    /* Active language button */
+
+    languageButtons.forEach((button) => {
+
+      button.classList.toggle(
+        "active",
+        button.getAttribute("data-lang") ===
+          selectedLanguage
+      );
+
+    });
+
+
+    try {
+
+      localStorage.setItem(
+        "aquib-language",
+        selectedLanguage
+      );
+
+    } catch (error) {
+      /* Ignore storage errors */
+    }
+
+
+    /* Close menu after language change */
+
+    closeMenu();
+
+  }
+
+
+  /* LANGUAGE BUTTON EVENTS */
+
+  languageButtons.forEach((button) => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        setLanguage(
+          button.getAttribute(
+            "data-lang"
+          )
+        );
+
+      }
+    );
 
   });
 
 
-  /* Load saved language */
+  /* LOAD SAVED LANGUAGE */
 
   let savedLanguage = "en";
 
   try {
 
     const stored =
-      localStorage.getItem("aquib-language");
+      localStorage.getItem(
+        "aquib-language"
+      );
 
-    if (stored === "ar" || stored === "en") {
+    if (
+      stored === "ar" ||
+      stored === "en"
+    ) {
       savedLanguage = stored;
     }
 
   } catch (error) {
-    /* Ignore storage errors */
+    savedLanguage = "en";
   }
 
   setLanguage(savedLanguage);
 
 
   /* =======================================================
-     LOGO FALLBACK
-     ======================================================= */
+     IMAGE FALLBACK
+  ======================================================= */
 
-  $$("img").forEach(image => {
+  document
+    .querySelectorAll(".industrial-logo img, .company-brands img")
+    .forEach((image) => {
 
-    image.addEventListener("error", () => {
+      image.addEventListener(
+        "error",
+        () => {
 
-      image.style.display = "none";
+          image.style.display = "none";
 
-      const fallback =
-        image.parentElement?.querySelector(".logo-fallback");
+        },
+        { once: true }
+      );
 
-      if (fallback) {
-        fallback.style.display = "block";
+    });
+
+
+  /* =======================================================
+     RESIZE SAFETY
+  ======================================================= */
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      if (window.innerWidth > 760) {
+        closeMenu();
       }
 
-    });
-
-  });
-
-
-  /* =======================================================
-     CLOSE MOBILE MENU ON ESC
-     ======================================================= */
-
-  document.addEventListener("keydown", event => {
-
-    if (event.key !== "Escape") return;
-
-    if (!mobileNav || !menuToggle) return;
-
-    mobileNav.classList.remove("open");
-    menuToggle.classList.remove("active");
-
-    menuToggle.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
-    document.body.classList.remove("menu-open");
-  });
-
-
-  /* =======================================================
-     SMOOTH ANCHOR FALLBACK
-     ======================================================= */
-
-  $$('a[href^="#"]').forEach(link => {
-
-    link.addEventListener("click", event => {
-
-      const targetId =
-        link.getAttribute("href");
-
-      if (!targetId || targetId === "#") return;
-
-      const target =
-        document.querySelector(targetId);
-
-      if (!target) return;
-
-      event.preventDefault();
-
-      target.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        block: "start"
-      });
-
-    });
-
-  });
-
-
-  /* =======================================================
-     IMAGE LAZY LOAD SAFETY
-     ======================================================= */
-
-  $$("img[loading='lazy']").forEach(image => {
-
-    image.setAttribute(
-      "decoding",
-      "async"
-    );
-
-  });
-
-
-  /* =======================================================
-     CONSOLE MESSAGE
-     ======================================================= */
-
-  console.log(
-    "%cAQUIB.%c Industrial HSE / Operations / Planning",
-    "color:#c9e86b;font-weight:800;font-size:16px;",
-    "color:#87988f;font-size:12px;"
+    }
   );
 
 });
