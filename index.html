@@ -2,96 +2,98 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <title>Mohammad Aquib Siddiquee | HSE Officer | Operations | Planning</title>
 
   <meta
     name="description"
-    content="Mohammad Aquib Siddiquee — HSE Officer, Industrial Safety and Process Operations professional with Saudi industrial experience."
+    content="Mohammad Aquib Siddiquee — HSE, industrial operations, process safety and turnaround planning professional with Saudi Arabia experience."
   >
 
-  <meta
-    name="theme-color"
-    content="#07100f"
-  >
-
-  <title>Mohammad Aquib Siddiquee | HSE & Industrial Operations</title>
-
-  <link rel="icon" href="assets/icons/favicon.svg">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
 
-  <!-- SCROLL PROGRESS -->
-  <div class="scroll-progress" aria-hidden="true"></div>
+  <!-- ================= HEADER ================= -->
 
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
-  <header class="site-header" id="site-header">
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
 
-    <div class="container header-inner">
-
-      <a href="#home" class="logo" aria-label="Aquib home">
+      <a href="#home" class="brand" aria-label="Aquib home">
         AQUIB<span>.</span>
       </a>
 
-      <nav class="main-nav" aria-label="Main navigation">
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        type="button"
+        aria-controls="siteNav"
+        aria-expanded="false"
+        aria-label="Open navigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-        <div class="nav-links" id="nav-links">
+      <nav class="site-nav" id="siteNav">
 
-          <a href="#home" class="nav-link active" data-section="home">
-            Home
-          </a>
+        <a href="#home"
+           data-en="Home"
+           data-ar="الرئيسية">
+          Home
+        </a>
 
-          <a href="#about" class="nav-link" data-section="about">
-            About
-          </a>
+        <a href="#about"
+           data-en="About"
+           data-ar="نبذة">
+          About
+        </a>
 
-          <a href="#experience" class="nav-link" data-section="experience">
-            Experience
-          </a>
+        <a href="#experience"
+           data-en="Experience"
+           data-ar="الخبرة">
+          Experience
+        </a>
 
-          <a href="#capabilities" class="nav-link" data-section="capabilities">
-            Capabilities
-          </a>
+        <a href="#capabilities"
+           data-en="Capabilities"
+           data-ar="المهارات">
+          Capabilities
+        </a>
 
-          <a href="#projects" class="nav-link" data-section="projects">
-            Projects
-          </a>
+        <a href="#companies"
+           data-en="Companies"
+           data-ar="الشركات">
+          Companies
+        </a>
 
-          <a href="#education" class="nav-link" data-section="education">
-            Education
-          </a>
+        <a href="#education"
+           data-en="Education"
+           data-ar="التعليم">
+          Education
+        </a>
 
-          <a href="#contact" class="nav-link" data-section="contact">
-            Contact
-          </a>
+        <a href="#open-to-work"
+           data-en="Open to Work"
+           data-ar="متاح للعمل">
+          Open to Work
+        </a>
 
-        </div>
+        <a href="#contact"
+           data-en="Contact"
+           data-ar="تواصل">
+          Contact
+        </a>
 
-      </nav>
-
-      <div class="header-actions">
-
-        <div class="language-switcher" aria-label="Language selector">
-
+        <div class="language-switcher" aria-label="Language selection">
           <button
+            class="lang-btn active"
             type="button"
-            class="language-btn active"
             data-lang="en"
             aria-label="English"
           >
@@ -99,74 +101,65 @@
           </button>
 
           <button
+            class="lang-btn"
             type="button"
-            class="language-btn"
             data-lang="ar"
             aria-label="Arabic"
           >
             عربي
           </button>
-
         </div>
 
-        <button
-          type="button"
-          class="menu-toggle"
-          id="menu-toggle"
-          aria-label="Open navigation"
-          aria-expanded="false"
-          aria-controls="nav-links"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-      </div>
+      </nav>
 
     </div>
-
   </header>
 
 
   <main>
 
-    <!-- ===================================================
-         HERO
-    ==================================================== -->
-    <section class="hero" id="home">
+    <!-- ================= HERO ================= -->
 
-      <div class="hero-background" aria-hidden="true"></div>
+    <section class="hero section" id="home">
 
-      <div class="container hero-grid">
+      <div class="hero-grid container">
 
         <div class="hero-content">
 
-          <div class="hero-kicker">
-            <span data-en="SAUDI ARABIA · INDUSTRIAL HSE"
-                  data-ar="السعودية · السلامة الصناعية">
-              SAUDI ARABIA · INDUSTRIAL HSE
-            </span>
+          <div class="eyebrow"
+               data-en="SAUDI ARABIA · INDUSTRIAL HSE"
+               data-ar="المملكة العربية السعودية · السلامة الصناعية">
+            SAUDI ARABIA · INDUSTRIAL HSE
           </div>
 
-          <h1 class="hero-title">
+          <h1>
             Mohammad Aquib
-            <span class="accent">Siddiquee</span>
+            <span>Siddiquee</span>
           </h1>
 
-          <h2 class="hero-role">
-            HSE Officer · Industrial Safety · Process Operations
+          <h2
+            data-en="HSE Officer | Industrial Safety & Process Operations"
+            data-ar="مسؤول سلامة | السلامة الصناعية وتشغيل العمليات">
+            HSE Officer | Industrial Safety & Process Operations
           </h2>
 
           <p
-            class="hero-description"
-            data-en="Industrial safety and operations professional with Saudi experience across power generation, petrochemical turnaround planning, PTW, LOTO, isolation control and DCS/SCADA operations."
-            data-ar="متخصص في السلامة الصناعية والعمليات بخبرة في السعودية في توليد الطاقة وأعمال الإيقاف والصيانة للبتروكيماويات وأنظمة تصاريح العمل والعزل وأنظمة DCS وSCADA."
-          >
-            Industrial safety and operations professional with Saudi experience
-            across power generation, petrochemical turnaround planning, PTW,
-            LOTO, isolation control and DCS/SCADA operations.
+            data-en="Industrial HSE and operations professional with Saudi experience across power generation, petrochemical turnaround planning, permit-to-work, LOTO, DCS/SCADA and contractor coordination."
+            data-ar="متخصص في السلامة الصناعية وتشغيل العمليات مع خبرة في المملكة العربية السعودية في توليد الطاقة، وتخطيط أعمال الصيانة، وتصاريح العمل، والعزل LOTO، وأنظمة DCS/SCADA وتنسيق المقاولين.">
+            Industrial HSE and operations professional with Saudi experience
+            across power generation, petrochemical turnaround planning,
+            permit-to-work, LOTO, DCS/SCADA and contractor coordination.
           </p>
+
+          <div class="availability-line">
+            <span class="status-dot"></span>
+
+            <span
+              data-en="Open to HSE, Operations, Process Safety & Turnaround opportunities"
+              data-ar="متاح لفرص السلامة والعمليات وسلامة العمليات وتخطيط أعمال الصيانة">
+              Open to HSE, Operations, Process Safety & Turnaround opportunities
+            </span>
+          </div>
 
           <div class="hero-actions">
 
@@ -174,19 +167,25 @@
               href="Mohammad-Aquib-Siddiquee-CV.pdf"
               class="btn btn-primary"
               download
-            >
+              data-en="Download CV"
+              data-ar="تحميل السيرة الذاتية">
               Download CV
             </a>
 
-            <a href="#contact" class="btn btn-secondary">
+            <a
+              href="#contact"
+              class="btn btn-secondary"
+              data-en="Contact Me"
+              data-ar="تواصل معي">
               Contact Me
             </a>
 
             <a
               href="https://www.linkedin.com/in/mohammad-aquib-siddiquee-388b64162"
-              class="btn btn-link"
+              class="linkedin-link"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
             >
               LinkedIn ↗
             </a>
@@ -195,146 +194,134 @@
 
           <div class="hero-tags">
 
-            <span class="tag">PTW</span>
-            <span class="tag">LOTO</span>
-            <span class="tag">63 MW POWER</span>
-            <span class="tag">LDPE / HDPE</span>
-
-          </div>
-
-          <div class="availability">
-            <span class="availability-dot"></span>
-            <span data-en="Available for Saudi / GCC opportunities"
-                  data-ar="متاح لفرص العمل في السعودية ودول الخليج">
-              Available for Saudi / GCC opportunities
-            </span>
-          </div>
-
-        </div>
-
-
-        <!-- TECH PANEL -->
-        <div class="hero-panel reveal">
-
-          <div class="hero-panel-header">
-
-            <span class="status">
-              SYSTEM STATUS · AVAILABLE
-            </span>
-
-            <span class="panel-code">
-              HSE / OPS / TA
-            </span>
-
-          </div>
-
-          <div class="tech-core">
-
-            <div class="core-ring"></div>
-
-            <div class="core-center">
-              INDUSTRIAL
-            </div>
-
-            <div class="signal signal-top">
-              HSE
-            </div>
-
-            <div class="signal signal-right">
-              OPS
-            </div>
-
-            <div class="signal signal-bottom">
-              TA
-            </div>
-
-            <div class="signal signal-left">
-              AUTO
-            </div>
-
-          </div>
-
-          <div class="hero-panel-bottom">
-
-            <div class="panel-stat">
-              <strong>PTW</strong>
-              <span>WORK CONTROL</span>
-            </div>
-
-            <div class="panel-stat">
-              <strong>LOTO</strong>
-              <span>ISOLATION</span>
-            </div>
-
-            <div class="panel-stat">
-              <strong>DCS</strong>
-              <span>OPERATIONS</span>
-            </div>
+            <span>PTW</span>
+            <span>LOTO</span>
+            <span>HIRA / JSA</span>
+            <span>DCS / SCADA</span>
+            <span>Primavera P6</span>
 
           </div>
 
         </div>
+
+
+        <!-- HERO STATUS PANEL -->
+
+        <aside class="system-panel">
+
+          <div class="panel-label"
+               data-en="PROFESSIONAL PROFILE"
+               data-ar="الملف المهني">
+            PROFESSIONAL PROFILE
+          </div>
+
+          <div class="system-status">
+            <span class="status-dot"></span>
+            <strong
+              data-en="AVAILABLE"
+              data-ar="متاح">
+              AVAILABLE
+            </strong>
+          </div>
+
+          <div class="panel-divider"></div>
+
+          <div class="system-row">
+            <span
+              data-en="Primary Focus"
+              data-ar="التركيز الأساسي">
+              Primary Focus
+            </span>
+
+            <strong
+              data-en="HSE / Operations"
+              data-ar="السلامة / العمليات">
+              HSE / Operations
+            </strong>
+          </div>
+
+          <div class="system-row">
+            <span
+              data-en="Additional Focus"
+              data-ar="مجالات إضافية">
+              Additional Focus
+            </span>
+
+            <strong
+              data-en="Process Safety"
+              data-ar="سلامة العمليات">
+              Process Safety
+            </strong>
+          </div>
+
+          <div class="system-row">
+            <span
+              data-en="Planning"
+              data-ar="التخطيط">
+              Planning
+            </span>
+
+            <strong>Primavera P6</strong>
+          </div>
+
+          <div class="system-row">
+            <span
+              data-en="Region"
+              data-ar="المنطقة">
+              Region
+            </span>
+
+            <strong>Saudi Arabia / GCC</strong>
+          </div>
+
+          <div class="system-footer">
+            <span>STATUS</span>
+            <span class="live-indicator">● ACTIVE</span>
+          </div>
+
+        </aside>
 
       </div>
 
     </section>
 
 
-    <!-- ===================================================
-         STATS
-    ==================================================== -->
-    <section class="stats">
+    <!-- ================= COMPANIES ================= -->
 
-      <div class="container stats-grid">
-
-        <div class="stat reveal">
-          <span class="stat-number" data-counter="63">0</span>
-          <span class="stat-label">MW CAPTIVE POWER</span>
-        </div>
-
-        <div class="stat reveal">
-          <span class="stat-number" data-counter="6">0</span>
-          <span class="stat-label">WÄRTSILÄ UNITS</span>
-        </div>
-
-        <div class="stat reveal">
-          <span class="stat-number">15–20+</span>
-          <span class="stat-label">PTW ACTIVITIES / DAY</span>
-        </div>
-
-        <div class="stat reveal">
-          <span class="stat-number">3+</span>
-          <span class="stat-label">YEARS SAUDI INDUSTRIAL EXP.</span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         INDUSTRIAL EXPOSURE
-    ==================================================== -->
-    <section class="industrial-strip" id="industrial-exposure">
+    <section class="companies section" id="companies">
 
       <div class="container">
 
-        <div class="industrial-heading reveal">
+        <div class="section-heading compact">
 
-          <div>
-            <span>INDUSTRIAL EXPOSURE</span>
-            <p>
-              Companies, technologies and industrial environments connected
-              to my professional journey.
-            </p>
+          <div class="eyebrow"
+               data-en="INDUSTRIAL ENVIRONMENT"
+               data-ar="البيئة الصناعية">
+            INDUSTRIAL ENVIRONMENT
           </div>
+
+          <h2
+            data-en="Companies & Technologies"
+            data-ar="الشركات والتقنيات">
+            Companies & Technologies
+          </h2>
+
+          <p
+            data-en="Industrial organizations and technologies connected to my professional experience."
+            data-ar="الشركات والتقنيات الصناعية المرتبطة بخبرتي المهنية.">
+            Industrial organizations and technologies connected to my
+            professional experience.
+          </p>
 
         </div>
 
-        <div class="industrial-logos">
+
+        <div class="logo-grid">
+
+          <!-- Ma'aden -->
 
           <a
-            class="industrial-logo reveal"
+            class="logo-tile"
             href="https://www.maaden.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -343,14 +330,15 @@
             <img
               src="https://axvpvthrjz64.compat.objectstorage.me-jeddah-1.oraclecloud.com/maaden-website-assets/globals/maaden_english_secondary_logo_rgb_white-gold.svg"
               alt="Ma'aden"
-              loading="lazy"
             >
-            <span>Ma'aden</span>
+            <span class="logo-fallback" hidden>MA'ADEN</span>
           </a>
 
 
+          <!-- DRA Global -->
+
           <a
-            class="industrial-logo reveal"
+            class="logo-tile"
             href="https://www.draglobal.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -359,26 +347,33 @@
             <img
               src="https://www.draglobal.com/media/mjmlr13y/dra_logo-full_colour_rgb.png"
               alt="DRA Global"
-              loading="lazy"
             >
-            <span>DRA Global</span>
+            <span class="logo-fallback" hidden>DRA GLOBAL</span>
           </a>
 
 
-          <div class="industrial-logo reveal" aria-label="Tasnee">
-
-            <div class="text-logo">
-              TASNEE
-            </div>
-
-            <span>Tasnee</span>
-
-          </div>
-
+          <!-- TASNEE -->
 
           <a
-            class="industrial-logo reveal"
-            href="https://brandhub.wartsila.com/"
+            class="logo-tile"
+            href="https://www.tasnee.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TASNEE"
+          >
+            <img
+              src="TASNEE-LOGO.png"
+              alt="TASNEE"
+            >
+            <span class="logo-fallback" hidden>TASNEE</span>
+          </a>
+
+
+          <!-- Wärtsilä -->
+
+          <a
+            class="logo-tile"
+            href="https://www.wartsila.com/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Wärtsilä"
@@ -386,37 +381,42 @@
             <img
               src="https://brandhub.wartsila.com/m/139119681d7a77dc/original/Wartsila-logo-color-positive.png"
               alt="Wärtsilä"
-              loading="lazy"
             >
-            <span>Wärtsilä</span>
+            <span class="logo-fallback" hidden>WÄRTSILÄ</span>
           </a>
 
 
+          <!-- Yokogawa -->
+
           <a
-            class="industrial-logo reveal"
-            href="https://www.yokogawa.com/in/"
+            class="logo-tile"
+            href="https://www.yokogawa.com/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Yokogawa"
           >
-            <div class="text-logo yokogawa-logo">
-              YOKOGAWA
-            </div>
-            <span>Yokogawa</span>
+            <img
+              src="YOKOGAWA-LOGO.png"
+              alt="Yokogawa"
+            >
+            <span class="logo-fallback" hidden>YOKOGAWA</span>
           </a>
 
 
+          <!-- Siemens -->
+
           <a
-            class="industrial-logo reveal"
-            href="https://www.siemens.com/en-gb/"
+            class="logo-tile"
+            href="https://www.siemens.com/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Siemens"
           >
-            <div class="text-logo siemens-logo">
-              SIEMENS
-            </div>
-            <span>Siemens</span>
+            <img
+              src="SIEMENS-LOGO.png"
+              alt="Siemens"
+            >
+            <span class="logo-fallback" hidden>SIEMENS</span>
           </a>
 
         </div>
@@ -426,79 +426,89 @@
     </section>
 
 
-    <!-- ===================================================
-         ABOUT
-    ==================================================== -->
-    <section class="about" id="about">
+    <!-- ================= ABOUT ================= -->
 
-      <div class="container">
+    <section class="about section" id="about">
 
-        <div class="section-head reveal">
+      <div class="container two-column">
 
-          <div>
-            <div class="section-kicker">PROFILE</div>
+        <div class="section-heading">
 
-            <h2 class="section-title">
-              Safety mindset.<br>
-              Operations discipline.
-            </h2>
+          <div class="eyebrow"
+               data-en="PROFILE"
+               data-ar="الملف الشخصي">
+            PROFILE
           </div>
 
-          <p class="section-description">
-            A combination of industrial safety, control-room operations and
-            turnaround planning experience.
-          </p>
+          <h2
+            data-en="Industrial experience with a systems mindset."
+            data-ar="خبرة صناعية بعقلية تعتمد على الأنظمة.">
+            Industrial experience with a systems mindset.
+          </h2>
 
         </div>
 
 
-        <div class="about-grid">
+        <div class="about-content">
 
-          <div class="about-lead reveal">
-            I work at the intersection of
-            <span class="accent-text">people, process and plant.</span>
-          </div>
+          <p
+            data-en="I work at the intersection of industrial safety, plant operations and planning. My experience includes Saudi power generation, petrochemical turnaround environments, permit-to-work systems, LOTO, DCS/SCADA operations and Primavera P6 planning."
+            data-ar="أعمل في تقاطع السلامة الصناعية وتشغيل المصانع والتخطيط. تشمل خبرتي توليد الطاقة في المملكة العربية السعودية، وبيئات أعمال الصيانة في قطاع البتروكيماويات، وأنظمة تصاريح العمل، والعزل LOTO، وتشغيل DCS/SCADA والتخطيط باستخدام Primavera P6.">
+            I work at the intersection of industrial safety, plant operations
+            and planning. My experience includes Saudi power generation,
+            petrochemical turnaround environments, permit-to-work systems,
+            LOTO, DCS/SCADA operations and Primavera P6 planning.
+          </p>
+
+          <p
+            data-en="My goal is to contribute to organizations where safe execution, operational discipline, process understanding and practical problem-solving are critical."
+            data-ar="هدفي هو المساهمة في المؤسسات التي تكون فيها سلامة التنفيذ والانضباط التشغيلي وفهم العمليات وحل المشكلات بشكل عملي عوامل أساسية.">
+            My goal is to contribute to organizations where safe execution,
+            operational discipline, process understanding and practical
+            problem-solving are critical.
+          </p>
+
+        </div>
+
+      </div>
 
 
-          <div class="about-copy reveal">
+      <div class="container stats-grid">
 
-            <p>
-              My experience spans Saudi industrial operations, captive power
-              generation and petrochemical turnaround planning.
-            </p>
+        <div class="stat-card">
+          <strong>63 MW</strong>
+          <span
+            data-en="Captive Power Plant"
+            data-ar="محطة توليد طاقة">
+            Captive Power Plant
+          </span>
+        </div>
 
-            <p>
-              I have worked with permit-to-work systems, LOTO and isolation
-              control, DCS/SCADA monitoring, operational coordination and
-              Primavera P6-based shutdown planning.
-            </p>
+        <div class="stat-card">
+          <strong>6</strong>
+          <span
+            data-en="Wärtsilä Engine Units"
+            data-ar="وحدات محركات Wärtsilä">
+            Wärtsilä Engine Units
+          </span>
+        </div>
 
-            <div class="about-list">
+        <div class="stat-card">
+          <strong>15–20+</strong>
+          <span
+            data-en="PTW Activities / Day"
+            data-ar="تصاريح عمل يومياً">
+            PTW Activities / Day
+          </span>
+        </div>
 
-              <div class="about-item">
-                <strong>Safety</strong>
-                <span>PTW · LOTO · Isolation · JSA</span>
-              </div>
-
-              <div class="about-item">
-                <strong>Operations</strong>
-                <span>DCS · SCADA · Alarms · Start-up</span>
-              </div>
-
-              <div class="about-item">
-                <strong>Planning</strong>
-                <span>P6 · WBS · Critical Path · Look-ahead</span>
-              </div>
-
-              <div class="about-item">
-                <strong>Technology</strong>
-                <span>PLC · SIS · Automation · Digital workflows</span>
-              </div>
-
-            </div>
-
-          </div>
-
+        <div class="stat-card">
+          <strong>Saudi</strong>
+          <span
+            data-en="Industrial Experience"
+            data-ar="خبرة صناعية">
+            Industrial Experience
+          </span>
         </div>
 
       </div>
@@ -506,182 +516,179 @@
     </section>
 
 
-    <!-- ===================================================
-         EXPERIENCE
-    ==================================================== -->
-    <section class="experience" id="experience">
+    <!-- ================= EXPERIENCE ================= -->
+
+    <section class="experience section" id="experience">
 
       <div class="container">
 
-        <div class="section-head reveal">
+        <div class="section-heading">
 
-          <div>
-            <div class="section-kicker">EXPERIENCE</div>
-
-            <h2 class="section-title">
-              Saudi industrial experience.
-            </h2>
+          <div class="eyebrow"
+               data-en="EXPERIENCE"
+               data-ar="الخبرة">
+            EXPERIENCE
           </div>
 
-          <p class="section-description">
-            Operations and planning experience across power generation and
-            petrochemical turnaround environments.
-          </p>
+          <h2
+            data-en="Industrial roles across planning, operations and safety."
+            data-ar="خبرات صناعية في التخطيط والعمليات والسلامة.">
+            Industrial roles across planning, operations and safety.
+          </h2>
 
         </div>
 
 
-        <div class="jobs">
+        <div class="experience-list">
+
 
           <!-- TASNEE -->
-          <article class="job reveal">
 
-            <div class="job-marker">
-              <span>01</span>
-              <i></i>
-            </div>
+          <article class="experience-card">
 
-            <div class="job-date">
-              JAN 2026 — PRESENT
-            </div>
+            <div class="experience-top">
 
-            <div class="job-content">
+              <div>
 
-              <div class="company-brand tasnee-brand">
-                <span>TASNEE</span>
+                <span class="experience-date">
+                  NOV 2025 — APR 2026
+                </span>
+
+                <h3>TASNEE</h3>
+
+                <h4
+                  data-en="Turnaround Scheduler — LDPE & HDPE"
+                  data-ar="مخطط أعمال الصيانة — LDPE و HDPE">
+                  Turnaround Scheduler — LDPE & HDPE
+                </h4>
+
               </div>
 
-              <div class="project-label">
-                PETROCHEMICAL · TURNAROUND
-              </div>
-
-              <h3>
-                Scheduler — LDPE & HDPE Turnaround
-              </h3>
-
-              <p class="company">
-                Tasnee · Saudi Arabia
-              </p>
-
-              <p class="job-intro">
-                Scheduling and progress coordination within a high-risk
-                petrochemical turnaround environment.
-              </p>
-
-              <ul>
-
-                <li>Shutdown scheduling and planning</li>
-
-                <li>Planned vs actual progress monitoring</li>
-
-                <li>Operations, maintenance and contractor coordination</li>
-
-                <li>Schedule conflict resolution and progress reporting</li>
-
-                <li>Primavera P6, WBS, critical path and look-ahead planning</li>
-
-              </ul>
-
-              <div class="job-tags">
-                <span>P6</span>
-                <span>WBS</span>
-                <span>CRITICAL PATH</span>
-                <span>TURNAROUND</span>
+              <div class="company-mark text-mark">
+                TASNEE
               </div>
 
             </div>
+
+
+            <p
+              data-en="Turnaround planning and scheduling within a petrochemical environment, supporting work breakdown, critical path development, look-ahead planning and contractor coordination."
+              data-ar="التخطيط والجدولة لأعمال الصيانة في بيئة بتروكيماوية، مع دعم تقسيم الأعمال والمسار الحرج والتخطيط المستقبلي وتنسيق المقاولين.">
+              Turnaround planning and scheduling within a petrochemical
+              environment, supporting work breakdown, critical path
+              development, look-ahead planning and contractor coordination.
+            </p>
+
+
+            <ul class="experience-points">
+
+              <li
+                data-en="Primavera P6 scheduling and WBS development"
+                data-ar="إعداد الجداول الزمنية وWBS باستخدام Primavera P6">
+                Primavera P6 scheduling and WBS development
+              </li>
+
+              <li
+                data-en="Critical path and look-ahead planning"
+                data-ar="تخطيط المسار الحرج والخطط المستقبلية">
+                Critical path and look-ahead planning
+              </li>
+
+              <li
+                data-en="Planned vs actual progress monitoring"
+                data-ar="متابعة التقدم المخطط مقابل الفعلي">
+                Planned vs actual progress monitoring
+              </li>
+
+              <li
+                data-en="Contractor and execution coordination"
+                data-ar="تنسيق المقاولين والتنفيذ">
+                Contractor and execution coordination
+              </li>
+
+            </ul>
 
           </article>
 
 
           <!-- MAADEN / DRA -->
-          <article class="job reveal">
 
-            <div class="job-marker">
-              <span>02</span>
-              <i></i>
-            </div>
+          <article class="experience-card">
 
-            <div class="job-date">
-              2022 — 2025
-            </div>
+            <div class="experience-top">
 
-            <div class="job-content">
+              <div>
 
-              <div class="company-brands">
+                <span class="experience-date">
+                  2022 — 2025
+                </span>
 
-                <div class="maaden-brand">
-                  <img
-                    src="https://axvpvthrjz64.compat.objectstorage.me-jeddah-1.oraclecloud.com/maaden-website-assets/globals/maaden_english_secondary_logo_rgb_white-gold.svg"
-                    alt="Ma'aden"
-                    loading="lazy"
-                  >
-                </div>
+                <h3>Ma’aden / DRA Global</h3>
 
-                <div class="dra-brand">
-                  <img
-                    src="https://www.draglobal.com/media/mjmlr13y/dra_logo-full_colour_rgb.png"
-                    alt="DRA Global"
-                    loading="lazy"
-                  >
-                </div>
+                <h4
+                  data-en="Control Room Operator | CCR / DCS Operator"
+                  data-ar="مشغل غرفة التحكم | مشغل CCR / DCS">
+                  Control Room Operator | CCR / DCS Operator
+                </h4>
+
+                <span class="project-label">
+                  Mansourah & Massarah Gold Project · Saudi Arabia
+                </span>
 
               </div>
 
-              <div class="project-label">
-                MA'ADEN GOLD · DRA GLOBAL
-              </div>
+              <div class="company-marks">
 
-              <h3>
-                Control Room Operator
-              </h3>
+                <span>MA’ADEN</span>
+                <span>DRA</span>
 
-              <p class="company">
-                Mansourah & Massarah Gold Project · Saudi Arabia
-              </p>
-
-              <p class="job-intro">
-                63 MW captive power plant supporting a major Saudi gold
-                processing operation.
-              </p>
-
-              <ul>
-
-                <li>
-                  Safe continuous plant operation and DCS/SCADA monitoring
-                </li>
-
-                <li>
-                  PTW issuance, monitoring and area coordination
-                </li>
-
-                <li>
-                  LOTO, isolation control and electrical isolation
-                </li>
-
-                <li>
-                  Alarm response and abnormal operating condition management
-                </li>
-
-                <li>
-                  Startup, shutdown and operational coordination
-                </li>
-
-                <li>
-                  Field inspections, JSA and toolbox-talk support
-                </li>
-
-              </ul>
-
-              <div class="job-tags">
-                <span>63 MW</span>
-                <span>6 × WÄRTSILÄ</span>
-                <span>DCS / SCADA</span>
-                <span>PTW</span>
-                <span>LOTO</span>
               </div>
 
             </div>
+
+
+            <p
+              data-en="Control room and operational safety responsibilities within a 63 MW captive power environment supporting a major Saudi mining project."
+              data-ar="مسؤوليات تشغيل غرفة التحكم والسلامة التشغيلية ضمن بيئة محطة طاقة بقدرة 63 ميجاواط تدعم مشروع تعدين رئيسي في المملكة العربية السعودية.">
+              Control room and operational safety responsibilities within a
+              63 MW captive power environment supporting a major Saudi mining
+              project.
+            </p>
+
+
+            <ul class="experience-points">
+
+              <li
+                data-en="DCS / SCADA monitoring, alarms and operational response"
+                data-ar="مراقبة DCS / SCADA والإنذارات والاستجابة التشغيلية">
+                DCS / SCADA monitoring, alarms and operational response
+              </li>
+
+              <li
+                data-en="PTW issuer, receiver and area authority responsibilities"
+                data-ar="مسؤوليات إصدار واستلام تصاريح العمل وسلطة المنطقة">
+                PTW issuer, receiver and area authority responsibilities
+              </li>
+
+              <li
+                data-en="LOTO, isolation and safe work coordination"
+                data-ar="العزل LOTO وتنسيق العمل الآمن">
+                LOTO, isolation and safe work coordination
+              </li>
+
+              <li
+                data-en="Startup, shutdown and abnormal-condition response"
+                data-ar="التشغيل والإيقاف والاستجابة للحالات غير الطبيعية">
+                Startup, shutdown and abnormal-condition response
+              </li>
+
+              <li
+                data-en="Field inspections, JSA and toolbox-talk support"
+                data-ar="الجولات الميدانية ودعم JSA واجتماعات Toolbox Talk">
+                Field inspections, JSA and toolbox-talk support
+              </li>
+
+            </ul>
 
           </article>
 
@@ -692,255 +699,107 @@
     </section>
 
 
-    <!-- ===================================================
-         HSE CAPABILITIES
-    ==================================================== -->
-    <section class="capabilities" id="capabilities">
+    <!-- ================= CAPABILITIES ================= -->
+
+    <section class="capabilities section" id="capabilities">
 
       <div class="container">
 
-        <div class="section-head reveal">
+        <div class="section-heading">
 
-          <div>
-            <div class="section-kicker">CORE CAPABILITIES</div>
-
-            <h2 class="section-title">
-              Practical safety<br>
-              and operations control.
-            </h2>
+          <div class="eyebrow"
+               data-en="CORE CAPABILITIES"
+               data-ar="المهارات الأساسية">
+            CORE CAPABILITIES
           </div>
 
-          <p class="section-description">
-            The areas where my operational and HSE experience create the most
-            value.
-          </p>
+          <h2
+            data-en="Safety, operations and planning."
+            data-ar="السلامة والعمليات والتخطيط.">
+            Safety, operations and planning.
+          </h2>
 
         </div>
 
 
         <div class="capability-grid">
 
-          <article class="capability-card reveal">
+          <article class="capability-card">
 
-            <div class="card-number">01 / SAFETY</div>
+            <div class="capability-number">01</div>
 
-            <h3>Permit to Work</h3>
-
-            <p>
-              Permit coordination, work authorization, area authority and
-              safe-work control in active industrial environments.
-            </p>
-
-          </article>
-
-
-          <article class="capability-card reveal">
-
-            <div class="card-number">02 / ISOLATION</div>
-
-            <h3>LOTO & Isolation</h3>
-
-            <p>
-              Isolation control and verification supporting maintenance and
-              high-risk work activities.
-            </p>
-
-          </article>
-
-
-          <article class="capability-card reveal">
-
-            <div class="card-number">03 / OPERATIONS</div>
-
-            <h3>DCS / SCADA</h3>
-
-            <p>
-              Control-room monitoring, alarms, operating parameters and
-              coordination with field teams.
-            </p>
-
-          </article>
-
-
-          <article class="capability-card reveal">
-
-            <div class="card-number">04 / PLANNING</div>
-
-            <h3>Turnaround Planning</h3>
-
-            <p>
-              Primavera P6 scheduling, WBS development, critical path,
-              look-ahead planning and progress tracking.
-            </p>
-
-          </article>
-
-
-          <article class="capability-card reveal">
-
-            <div class="card-number">05 / FIELD</div>
-
-            <h3>Worksite Coordination</h3>
-
-            <p>
-              Coordination between operations, maintenance, contractors and
-              field teams to maintain safe execution.
-            </p>
-
-          </article>
-
-
-          <article class="capability-card reveal">
-
-            <div class="card-number">06 / DIGITAL</div>
-
-            <h3>Process Improvement</h3>
-
-            <p>
-              Interest in digital work control, operational workflows,
-              automation and practical technology solutions.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         OPERATIONS SYSTEM
-    ==================================================== -->
-    <section class="operations">
-
-      <div class="container">
-
-        <div class="section-head reveal">
-
-          <div>
-            <div class="section-kicker">TECHNICAL FOUNDATION</div>
-
-            <h2 class="section-title">
-              From control room<br>
-              to field execution.
-            </h2>
-          </div>
-
-          <p class="section-description">
-            Industrial automation and operations exposure connecting control
-            systems with safe field execution.
-          </p>
-
-        </div>
-
-
-        <div class="system-flow reveal">
-
-          <div class="system-node">
-            <strong>DCS</strong>
-            CONTROL
-          </div>
-
-          <div class="system-node">
-            <strong>PLC</strong>
-            LOGIC
-          </div>
-
-          <div class="system-node">
-            <strong>SIS</strong>
-            SAFETY
-          </div>
-
-          <div class="system-node">
-            <strong>SCADA</strong>
-            MONITORING
-          </div>
-
-          <div class="system-node">
-            <strong>FIELD</strong>
-            EXECUTION
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         TURNAROUND
-    ==================================================== -->
-    <section class="turnaround">
-
-      <div class="container">
-
-        <div class="section-head reveal">
-
-          <div>
-            <div class="section-kicker">TURNAROUND</div>
-
-            <h2 class="section-title">
-              Planning the shutdown<br>
-              before the work starts.
-            </h2>
-          </div>
-
-          <p class="section-description">
-            Bringing schedule visibility and execution discipline to
-            petrochemical shutdown activities.
-          </p>
-
-        </div>
-
-
-        <div class="turnaround-grid">
-
-          <article class="turnaround-card reveal">
-
-            <div class="card-number">
-              PLANNING
-            </div>
-
-            <h3>
-              Build the execution roadmap.
+            <h3
+              data-en="HSE & Work Control"
+              data-ar="السلامة والتحكم في العمل">
+              HSE & Work Control
             </h3>
 
-            <p>
-              WBS development, activity sequencing, critical path analysis,
-              look-ahead planning and schedule logic.
+            <p
+              data-en="Permit-to-work, LOTO, isolation, HIRA/JSA, toolbox talks and safe-work coordination."
+              data-ar="تصاريح العمل، LOTO، العزل، HIRA/JSA، اجتماعات Toolbox Talk وتنسيق العمل الآمن.">
+              Permit-to-work, LOTO, isolation, HIRA/JSA, toolbox talks and
+              safe-work coordination.
             </p>
 
-            <div class="turnaround-meta">
-              <span class="tag">PRIMAVERA P6</span>
-              <span class="tag">WBS</span>
-              <span class="tag">CPM</span>
+            <div class="skill-tags">
+              <span>PTW</span>
+              <span>LOTO</span>
+              <span>HIRA</span>
+              <span>JSA</span>
             </div>
 
           </article>
 
 
-          <article class="turnaround-card reveal">
+          <article class="capability-card">
 
-            <div class="card-number">
-              CONTROL
-            </div>
+            <div class="capability-number">02</div>
 
-            <h3>
-              Keep execution visible.
+            <h3
+              data-en="Plant Operations"
+              data-ar="تشغيل المصانع">
+              Plant Operations
             </h3>
 
-            <p>
-              Planned-versus-actual monitoring, progress coordination,
-              contractor interfaces and schedule conflict resolution.
+            <p
+              data-en="Control-room operations, DCS/SCADA monitoring, PLC/SIS exposure, alarms, startup and shutdown."
+              data-ar="تشغيل غرف التحكم، مراقبة DCS/SCADA، خبرة PLC/SIS، الإنذارات والتشغيل والإيقاف.">
+              Control-room operations, DCS/SCADA monitoring, PLC/SIS
+              exposure, alarms, startup and shutdown.
             </p>
 
-            <div class="turnaround-meta">
-              <span class="tag">PROGRESS</span>
-              <span class="tag">LOOK-AHEAD</span>
-              <span class="tag">COORDINATION</span>
+            <div class="skill-tags">
+              <span>DCS</span>
+              <span>SCADA</span>
+              <span>PLC</span>
+              <span>SIS</span>
+            </div>
+
+          </article>
+
+
+          <article class="capability-card">
+
+            <div class="capability-number">03</div>
+
+            <h3
+              data-en="Turnaround Planning"
+              data-ar="تخطيط أعمال الصيانة">
+              Turnaround Planning
+            </h3>
+
+            <p
+              data-en="Primavera P6, WBS, critical path, look-ahead planning, progress tracking and contractor coordination."
+              data-ar="Primavera P6، هيكل تقسيم العمل، المسار الحرج، التخطيط المستقبلي، متابعة التقدم وتنسيق المقاولين.">
+              Primavera P6, WBS, critical path, look-ahead planning,
+              progress tracking and contractor coordination.
+            </p>
+
+            <div class="skill-tags">
+              <span>P6</span>
+              <span>WBS</span>
+              <span>CPM</span>
+              <span>Progress</span>
             </div>
 
           </article>
@@ -952,87 +811,63 @@
     </section>
 
 
-    <!-- ===================================================
-         PROJECTS
-    ==================================================== -->
-    <section class="projects" id="projects">
+    <!-- ================= SYSTEMS ================= -->
+
+    <section class="systems section">
 
       <div class="container">
 
-        <div class="section-head reveal">
+        <div class="section-heading compact">
 
-          <div>
-            <div class="section-kicker">PROJECTS & IMPROVEMENT</div>
-
-            <h2 class="section-title">
-              Turning operational problems<br>
-              into practical solutions.
-            </h2>
+          <div class="eyebrow"
+               data-en="TECHNICAL ENVIRONMENT"
+               data-ar="البيئة التقنية">
+            TECHNICAL ENVIRONMENT
           </div>
 
-          <p class="section-description">
-            Examples of improvement ideas developed from real industrial
-            operating environments.
-          </p>
+          <h2
+            data-en="From field activity to control-room decisions."
+            data-ar="من النشاط الميداني إلى قرارات غرفة التحكم.">
+            From field activity to control-room decisions.
+          </h2>
 
         </div>
 
 
-        <div class="project-grid">
+        <div class="system-flow">
 
-          <article class="project-card reveal">
+          <div class="flow-node">
+            <span>FIELD</span>
+            <small>Operations</small>
+          </div>
 
-            <div class="project-number">
-              01
-            </div>
+          <div class="flow-line"></div>
 
-            <h3>
-              Safe Work Control
-            </h3>
+          <div class="flow-node">
+            <span>PLC</span>
+            <small>Control</small>
+          </div>
 
-            <p>
-              Practical PTW, LOTO and work-control experience supporting
-              safer execution of maintenance and operational activities.
-            </p>
+          <div class="flow-line"></div>
 
-          </article>
+          <div class="flow-node">
+            <span>DCS</span>
+            <small>Process</small>
+          </div>
 
+          <div class="flow-line"></div>
 
-          <article class="project-card reveal">
+          <div class="flow-node">
+            <span>SCADA</span>
+            <small>Monitoring</small>
+          </div>
 
-            <div class="project-number">
-              02
-            </div>
+          <div class="flow-line"></div>
 
-            <h3>
-              Digital Work Request
-            </h3>
-
-            <p>
-              Proposed and supported the concept of a digital work-request
-              workflow to improve visibility and coordination of plant work.
-            </p>
-
-          </article>
-
-
-          <article class="project-card reveal">
-
-            <div class="project-number">
-              03
-            </div>
-
-            <h3>
-              Robotic Solar Cleaning
-            </h3>
-
-            <p>
-              Proposed robotic cleaning concepts for a large solar-panel
-              installation to reduce manual effort and improve cleaning
-              consistency.
-            </p>
-
-          </article>
+          <div class="flow-node">
+            <span>HSE</span>
+            <small>Safe Execution</small>
+          </div>
 
         </div>
 
@@ -1041,34 +876,41 @@
     </section>
 
 
-    <!-- ===================================================
-         EDUCATION
-    ==================================================== -->
-    <section class="education" id="education">
+    <!-- ================= EDUCATION ================= -->
+
+    <section class="education section" id="education">
 
       <div class="container">
 
-        <div class="section-head reveal">
+        <div class="section-heading">
 
-          <div>
-            <div class="section-kicker">EDUCATION & TRAINING</div>
-
-            <h2 class="section-title">
-              Engineering foundation.<br>
-              Industrial specialization.
-            </h2>
+          <div class="eyebrow"
+               data-en="EDUCATION & CREDENTIALS"
+               data-ar="التعليم والشهادات">
+            EDUCATION & CREDENTIALS
           </div>
+
+          <h2
+            data-en="Technical foundation backed by industrial training."
+            data-ar="أساس تقني مدعوم بالتدريب الصناعي.">
+            Technical foundation backed by industrial training.
+          </h2>
 
         </div>
 
 
         <div class="education-grid">
 
-          <article class="education-card reveal">
 
-            <div class="education-year">
-              2021 — 2022
-            </div>
+          <!-- DEGREE -->
+
+          <article class="education-card">
+
+            <span class="education-type"
+                  data-en="BACHELOR'S DEGREE"
+                  data-ar="درجة البكالوريوس">
+              BACHELOR'S DEGREE
+            </span>
 
             <h3>
               B.Tech — Computer Science & Engineering
@@ -1079,58 +921,82 @@
               Greater Noida · AKTU
             </p>
 
-            <div class="education-result">
-              CGPA 6.76 / 10
+            <div class="education-meta">
+
+              <span>2021 — 2022</span>
+
+              <strong>3.38 / 5.0</strong>
+
             </div>
+
+            <p class="education-description"
+               data-en="Computer Science foundation helped in industrial automation, day-to-day operational technologies, and report-based analysis."
+               data-ar="ساعدت خلفية علوم الحاسب في الأتمتة الصناعية والتقنيات التشغيلية اليومية والتحليل القائم على التقارير.">
+              Computer Science foundation helped in industrial automation,
+              day-to-day operational technologies, and report-based analysis.
+            </p>
 
           </article>
 
 
-          <article class="education-card reveal">
+          <!-- YOKOGAWA -->
 
-            <div class="education-year">
-              INDUSTRIAL TRAINING
-            </div>
+          <article class="education-card">
+
+            <span class="education-type"
+                  data-en="INDUSTRIAL AUTOMATION TRAINING"
+                  data-ar="تدريب الأتمتة الصناعية">
+              INDUSTRIAL AUTOMATION TRAINING
+            </span>
 
             <h3>
-              Yokogawa Industrial Automation
+              Yokogawa Technical Training
             </h3>
 
-            <p>
-              CENTUM VP, DCS/PLC/SCADA, STARDOM PLC, ProSafe-RS,
-              FASTools, Foundation Fieldbus, InTouch and S7-1500 exposure.
+            <p
+              data-en="DCS / PLC / SCADA and industrial control systems training."
+              data-ar="تدريب على أنظمة DCS / PLC / SCADA وأنظمة التحكم الصناعية.">
+              DCS / PLC / SCADA and industrial control systems training.
             </p>
+
+            <div class="training-tags">
+              <span>CENTUM VP</span>
+              <span>STARDOM PLC</span>
+              <span>ProSafe-RS</span>
+              <span>FASTools</span>
+              <span>Foundation Fieldbus</span>
+              <span>InTouch</span>
+              <span>S7-1500</span>
+              <span>Loop Checks</span>
+            </div>
 
           </article>
 
         </div>
 
 
-        <div class="credentials reveal">
+        <!-- CREDENTIALS -->
 
-          <span class="credential">
-            IOSH MANAGING SAFELY
-          </span>
+        <div class="credentials">
 
-          <span class="credential">
-            OSHA 30-HOUR
-          </span>
+          <h3
+            data-en="Professional Credentials"
+            data-ar="الشهادات المهنية">
+            Professional Credentials
+          </h3>
 
-          <span class="credential">
-            NEBOSH IGC
-          </span>
+          <div class="credential-list">
 
-          <span class="credential">
-            LEAN SIX SIGMA WHITE BELT
-          </span>
+            <span>NEBOSH IGC</span>
+            <span>IOSH Managing Safely</span>
+            <span>OSHA 30-Hour General Industry</span>
+            <span>Lean Six Sigma White Belt</span>
+            <span>Primavera P6 Professional 24</span>
+            <span>NPTEL Project Management</span>
+            <span>Power BI</span>
+            <span>Advanced Excel</span>
 
-          <span class="credential">
-            PRIMAVERA P6
-          </span>
-
-          <span class="credential">
-            POWER BI
-          </span>
+          </div>
 
         </div>
 
@@ -1139,58 +1005,113 @@
     </section>
 
 
-    <!-- ===================================================
-         WHY ME
-    ==================================================== -->
-    <section class="why-me">
+    <!-- ================= OPEN TO WORK ================= -->
+
+    <section class="open-to-work section" id="open-to-work">
 
       <div class="container">
 
-        <div class="section-head reveal">
+        <div class="open-work-card">
 
-          <div>
-            <div class="section-kicker">WHY AQUIB</div>
+          <div class="open-work-content">
 
-            <h2 class="section-title">
-              Built for industrial environments.
+            <div class="eyebrow"
+                 data-en="CAREER STATUS"
+                 data-ar="الحالة المهنية">
+              CAREER STATUS
+            </div>
+
+            <h2
+              data-en="Open to Work"
+              data-ar="متاح للعمل">
+              Open to Work
             </h2>
+
+            <p
+              data-en="I am currently open to opportunities across Saudi Arabia and the GCC where my HSE, operations, process-safety and turnaround-planning experience can contribute to safe and efficient industrial execution."
+              data-ar="أنا متاح حالياً للفرص في المملكة العربية السعودية ودول مجلس التعاون، حيث يمكن لخبرتي في السلامة والعمليات وسلامة العمليات وتخطيط أعمال الصيانة أن تساهم في تنفيذ الأعمال الصناعية بأمان وكفاءة.">
+              I am currently open to opportunities across Saudi Arabia and
+              the GCC where my HSE, operations, process-safety and
+              turnaround-planning experience can contribute to safe and
+              efficient industrial execution.
+            </p>
+
+
+            <div class="open-role-list">
+
+              <span
+                data-en="HSE"
+                data-ar="السلامة والصحة المهنية">
+                HSE
+              </span>
+
+              <span
+                data-en="Operations"
+                data-ar="العمليات">
+                Operations
+              </span>
+
+              <span
+                data-en="Process Safety"
+                data-ar="سلامة العمليات">
+                Process Safety
+              </span>
+
+              <span
+                data-en="Turnaround Planning"
+                data-ar="تخطيط أعمال الصيانة">
+                Turnaround Planning
+              </span>
+
+              <span
+                data-en="Industrial Roles"
+                data-ar="الوظائف الصناعية">
+                Industrial Roles
+              </span>
+
+            </div>
+
+
+            <div class="open-work-location">
+
+              <span class="status-dot"></span>
+
+              <strong
+                data-en="Saudi Arabia / GCC"
+                data-ar="المملكة العربية السعودية / دول الخليج">
+                Saudi Arabia / GCC
+              </strong>
+
+              <span
+                data-en="Available for suitable opportunities"
+                data-ar="متاح للفرص المناسبة">
+                Available for suitable opportunities
+              </span>
+
+            </div>
+
           </div>
 
-        </div>
 
+          <div class="open-work-action">
 
-        <div class="why-grid">
+            <a
+              href="#contact"
+              class="btn btn-primary"
+              data-en="Let's Connect"
+              data-ar="لنتواصل">
+              Let's Connect
+            </a>
 
-          <div class="why-item reveal">
-            <strong>Safety First</strong>
-            <p>
-              Practical understanding of work control, isolation and safe
-              execution.
-            </p>
-          </div>
+            <a
+              href="Mohammad-Aquib-Siddiquee-CV.pdf"
+              class="btn btn-outline"
+              download
+              data-en="Download CV"
+              data-ar="تحميل السيرة الذاتية">
+              Download CV
+            </a>
 
-          <div class="why-item reveal">
-            <strong>Operations Mindset</strong>
-            <p>
-              Control-room experience creates an understanding of plant
-              behavior and operational risk.
-            </p>
-          </div>
-
-          <div class="why-item reveal">
-            <strong>Planning Discipline</strong>
-            <p>
-              Schedule-based thinking for complex turnaround and maintenance
-              environments.
-            </p>
-          </div>
-
-          <div class="why-item reveal">
-            <strong>Technology Driven</strong>
-            <p>
-              Engineering education combined with industrial automation and
-              digital workflow exposure.
-            </p>
           </div>
 
         </div>
@@ -1200,57 +1121,67 @@
     </section>
 
 
-    <!-- ===================================================
-         CONTACT
-    ==================================================== -->
-    <section class="contact" id="contact">
+    <!-- ================= CONTACT ================= -->
 
-      <div class="container">
+    <section class="contact section" id="contact">
 
-        <div class="contact-box reveal">
+      <div class="container contact-grid">
 
-          <div class="section-kicker">
-            NEXT STEP
+        <div class="section-heading">
+
+          <div class="eyebrow"
+               data-en="CONTACT"
+               data-ar="تواصل">
+            CONTACT
           </div>
 
-          <h2>
-            Let's build safer,<br>
-            better industrial operations.
+          <h2
+            data-en="Let's discuss the next industrial challenge."
+            data-ar="لنتحدث عن التحدي الصناعي القادم.">
+            Let's discuss the next industrial challenge.
           </h2>
 
-          <p>
-            Open to HSE, industrial safety, operations, planning and
-            turnaround opportunities across Saudi Arabia and the GCC.
+          <p
+            data-en="For HSE, operations, process safety, turnaround planning or industrial opportunities, feel free to connect."
+            data-ar="للفرص في السلامة أو العمليات أو سلامة العمليات أو تخطيط أعمال الصيانة أو المجالات الصناعية، لا تتردد في التواصل.">
+            For HSE, operations, process safety, turnaround planning or
+            industrial opportunities, feel free to connect.
           </p>
 
-          <div class="contact-actions">
+        </div>
 
-            <a
-              href="mailto:aquibsid.work@gmail.com"
-              class="btn btn-primary"
-            >
-              Email Me
-            </a>
 
-            <a
-              href="https://wa.me/966565430687"
-              class="btn btn-secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
+        <div class="contact-links">
 
-            <a
-              href="https://www.linkedin.com/in/mohammad-aquib-siddiquee-388b64162"
-              class="btn btn-secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
+          <a
+            href="mailto:aquibsid.work@gmail.com"
+            class="contact-item"
+          >
+            <span class="contact-label">EMAIL</span>
+            <strong>aquibsid.work@gmail.com</strong>
+          </a>
 
-          </div>
+
+          <a
+            href="https://wa.me/966565430687"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-item"
+          >
+            <span class="contact-label">WHATSAPP</span>
+            <strong>+966 565 430 687</strong>
+          </a>
+
+
+          <a
+            href="https://www.linkedin.com/in/mohammad-aquib-siddiquee-388b64162"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-item"
+          >
+            <span class="contact-label">LINKEDIN</span>
+            <strong>Connect on LinkedIn ↗</strong>
+          </a>
 
         </div>
 
@@ -1261,38 +1192,56 @@
   </main>
 
 
-  <!-- =====================================================
-       FOOTER
-  ====================================================== -->
+  <!-- ================= MOBILE CONTACT BAR ================= -->
+
+  <div class="mobile-contact-bar">
+
+    <a
+      href="mailto:aquibsid.work@gmail.com"
+      data-en="Email"
+      data-ar="البريد">
+      Email
+    </a>
+
+    <a
+      href="https://wa.me/966565430687"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-en="WhatsApp"
+      data-ar="واتساب">
+      WhatsApp
+    </a>
+
+    <a
+      href="#open-to-work"
+      data-en="Open to Work"
+      data-ar="متاح للعمل">
+      Open to Work
+    </a>
+
+  </div>
+
+
+  <!-- ================= FOOTER ================= -->
+
   <footer class="site-footer">
 
     <div class="container footer-inner">
 
-      <p>
-        © <span id="year"></span> Mohammad Aquib Siddiquee
-      </p>
+      <span>
+        © <span id="currentYear"></span> Mohammad Aquib Siddiquee
+      </span>
 
-      <div class="footer-links">
-
-        <a href="#home">
-          Back to top ↑
-        </a>
-
-        <a
-          href="Mohammad-Aquib-Siddiquee-CV.pdf"
-          download
-        >
-          CV
-        </a>
-
-      </div>
+      <span
+        data-en="HSE · Operations · Process Safety · Planning"
+        data-ar="السلامة · العمليات · سلامة العمليات · التخطيط">
+        HSE · Operations · Process Safety · Planning
+      </span>
 
     </div>
 
   </footer>
 
-
-  <script src="script.js"></script>
 
 </body>
 </html>
