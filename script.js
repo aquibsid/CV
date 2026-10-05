@@ -1,265 +1,455 @@
 /* =========================================================
    AQUIB CV WEBSITE
-   Main interactions
+   MAIN JAVASCRIPT
    ========================================================= */
 
 document.documentElement.classList.add("js-ready");
 
-document.addEventListener("DOMContentLoaded", () => {
 
-  const $ = (selector, parent = document) =>
-    parent.querySelector(selector);
+/* ---------------------------------------------------------
+   HELPERS
+--------------------------------------------------------- */
 
-  const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
+const $ = (selector, parent = document) =>
+  parent.querySelector(selector);
 
-
-  /* =======================================================
-     CURRENT YEAR
-     ======================================================= */
-
-  const yearElement = $("#currentYear");
-
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
+const $$ = (selector, parent = document) =>
+  [...parent.querySelectorAll(selector)];
 
 
-  /* =======================================================
-     MOBILE MENU
-     ======================================================= */
+/* ---------------------------------------------------------
+   YEAR
+--------------------------------------------------------- */
 
-  const menuToggle = $("#menuToggle");
-  const mobileNav = $("#mobileNav");
+const year = $("#year");
 
-  if (menuToggle && mobileNav) {
-
-    menuToggle.addEventListener("click", () => {
-
-      const isOpen = mobileNav.classList.toggle("open");
-
-      menuToggle.classList.toggle("active", isOpen);
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-
-      document.body.classList.toggle("menu-open", isOpen);
-    });
+if (year) {
+  year.textContent = new Date().getFullYear();
+}
 
 
-    $$("#mobileNav a").forEach(link => {
+/* ---------------------------------------------------------
+   MOBILE MENU
+--------------------------------------------------------- */
 
-      link.addEventListener("click", () => {
+const menuBtn = $("#menuBtn");
+const mobileMenu = $("#mobileMenu");
 
-        mobileNav.classList.remove("open");
-        menuToggle.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
+if (menuBtn && mobileMenu) {
 
-        document.body.classList.remove("menu-open");
-      });
+  menuBtn.addEventListener("click", () => {
 
-    });
-  }
+    mobileMenu.classList.toggle("open");
 
-
-  /* =======================================================
-     SCROLL PROGRESS
-     ======================================================= */
-
-  const scrollProgress = $("#scrollProgress");
-
-  const updateScrollProgress = () => {
-
-    if (!scrollProgress) return;
-
-    const scrollTop = window.scrollY;
-
-    const documentHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-
-    const progress =
-      documentHeight > 0
-        ? (scrollTop / documentHeight) * 100
-        : 0;
-
-    scrollProgress.style.width = `${progress}%`;
-  };
-
-  window.addEventListener("scroll", updateScrollProgress, {
-    passive: true
   });
 
-  updateScrollProgress();
 
+  $$(".mobile-menu a").forEach(link => {
 
-  /* =======================================================
-     HEADER SHADOW
-     ======================================================= */
-
-  const header = $("#siteHeader");
-
-  const updateHeader = () => {
-
-    if (!header) return;
-
-    header.classList.toggle(
-      "scrolled",
-      window.scrollY > 20
-    );
-  };
-
-  window.addEventListener("scroll", updateHeader, {
-    passive: true
-  });
-
-  updateHeader();
-
-
-  /* =======================================================
-     SCROLL REVEAL
-     ======================================================= */
-
-  const revealElements = $$(".reveal");
-
-  const reducedMotion =
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (reducedMotion) {
-
-    revealElements.forEach(element => {
-      element.classList.add("visible");
+    link.addEventListener("click", () => {
+      mobileMenu.classList.remove("open");
     });
 
-  } else if ("IntersectionObserver" in window) {
+  });
 
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+}
 
-        entries.forEach(entry => {
 
-          if (!entry.isIntersecting) return;
+/* ---------------------------------------------------------
+   SCROLL PROGRESS
+--------------------------------------------------------- */
+
+const scrollProgress = $("#scrollProgress");
+
+function updateScrollProgress() {
+
+  if (!scrollProgress) return;
+
+  const scrollTop =
+    window.scrollY ||
+    document.documentElement.scrollTop;
+
+  const height =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+
+  const progress =
+    height > 0
+      ? (scrollTop / height) * 100
+      : 0;
+
+  scrollProgress.style.width = `${progress}%`;
+
+}
+
+window.addEventListener(
+  "scroll",
+  updateScrollProgress,
+  { passive: true }
+);
+
+updateScrollProgress();
+
+
+/* ---------------------------------------------------------
+   SCROLL REVEAL
+--------------------------------------------------------- */
+
+const revealElements = $$(".reveal");
+
+if ("IntersectionObserver" in window) {
+
+  const revealObserver = new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
 
           entry.target.classList.add("visible");
 
-          observer.unobserve(entry.target);
-        });
+          revealObserver.unobserve(entry.target);
 
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px"
-      }
-    );
+        }
 
-    revealElements.forEach(element => {
-      revealObserver.observe(element);
-    });
+      });
 
-  } else {
-
-    revealElements.forEach(element => {
-      element.classList.add("visible");
-    });
-
-  }
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -50px 0px"
+    }
+  );
 
 
-  /* =======================================================
-     COUNTERS
-     ======================================================= */
+  revealElements.forEach(element => {
+    revealObserver.observe(element);
+  });
 
-  const counters = $$(".counter");
+} else {
 
-  const animateCounter = element => {
+  revealElements.forEach(element => {
+    element.classList.add("visible");
+  });
 
-    const target = Number(element.dataset.target || 0);
-    const suffix = element.dataset.suffix || "";
+}
 
-    if (reducedMotion) {
-      element.textContent = `${target}${suffix}`;
-      return;
+
+/* ---------------------------------------------------------
+   COUNTERS
+--------------------------------------------------------- */
+
+const counters = $$("[data-counter]");
+
+function animateCounter(element) {
+
+  const target =
+    Number(element.dataset.counter);
+
+  if (!Number.isFinite(target)) return;
+
+  const duration = 1200;
+  const start = performance.now();
+
+  function update(now) {
+
+    const progress =
+      Math.min((now - start) / duration, 1);
+
+    const eased =
+      1 - Math.pow(1 - progress, 3);
+
+    element.textContent =
+      Math.round(target * eased);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
     }
 
-    const duration = 1200;
-    const startTime = performance.now();
+  }
 
-    const update = currentTime => {
-
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      const eased =
-        1 - Math.pow(1 - progress, 3);
-
-      const current =
-        Math.round(target * eased);
-
-      element.textContent = `${current}${suffix}`;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-
-    };
-
-    requestAnimationFrame(update);
-  };
+  requestAnimationFrame(update);
+}
 
 
-  if ("IntersectionObserver" in window) {
+if ("IntersectionObserver" in window) {
 
-    const counterObserver = new IntersectionObserver(
+  const counterObserver =
+    new IntersectionObserver(
       entries => {
 
         entries.forEach(entry => {
 
-          if (!entry.isIntersecting) return;
+          if (entry.isIntersecting) {
 
-          animateCounter(entry.target);
-          counterObserver.unobserve(entry.target);
+            animateCounter(entry.target);
+
+            counterObserver.unobserve(entry.target);
+
+          }
+
         });
 
       },
       {
-        threshold: .7
+        threshold: .6
       }
     );
 
-    counters.forEach(counter => {
-      counterObserver.observe(counter);
+
+  counters.forEach(counter => {
+    counterObserver.observe(counter);
+  });
+
+}
+
+
+/* ---------------------------------------------------------
+   HSE FILTERS
+--------------------------------------------------------- */
+
+const filterButtons = $$(".filter-btn");
+const skillCards = $$(".skill-card");
+
+filterButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const filter =
+      button.dataset.filter;
+
+    filterButtons.forEach(btn => {
+      btn.classList.remove("active");
     });
 
-  } else {
+    button.classList.add("active");
 
-    counters.forEach(counter => {
-      animateCounter(counter);
+
+    skillCards.forEach(card => {
+
+      const category =
+        card.dataset.category;
+
+      if (
+        filter === "all" ||
+        category === filter
+      ) {
+
+        card.classList.remove("hidden");
+
+      } else {
+
+        card.classList.add("hidden");
+
+      }
+
     });
+
+  });
+
+});
+
+
+/* ---------------------------------------------------------
+   LANGUAGE SWITCHER
+--------------------------------------------------------- */
+
+const languageButtons =
+  $$(".language-btn");
+
+const translatableElements =
+  $$("[data-en][data-ar]");
+
+
+function setLanguage(language) {
+
+  const isArabic =
+    language === "ar";
+
+  document.documentElement.lang =
+    isArabic ? "ar" : "en";
+
+  document.documentElement.dir =
+    isArabic ? "rtl" : "ltr";
+
+
+  translatableElements.forEach(element => {
+
+    const text =
+      isArabic
+        ? element.dataset.ar
+        : element.dataset.en;
+
+    if (text) {
+      element.textContent = text;
+    }
+
+  });
+
+
+  languageButtons.forEach(button => {
+
+    button.classList.toggle(
+      "active",
+      button.dataset.lang === language
+    );
+
+  });
+
+
+  try {
+
+    localStorage.setItem(
+      "aquib-language",
+      language
+    );
+
+  } catch (error) {
+
+    /* localStorage may be blocked */
 
   }
 
+}
 
-  /* =======================================================
-     ACTIVE NAVIGATION
-     ======================================================= */
 
-  const sections = $$("main section[id]");
-  const navLinks = $$(".desktop-nav a");
+languageButtons.forEach(button => {
 
-  if ("IntersectionObserver" in window) {
+  button.addEventListener(
+    "click",
+    () => {
 
-    const navObserver = new IntersectionObserver(
+      setLanguage(
+        button.dataset.lang
+      );
+
+    }
+  );
+
+});
+
+
+/* ---------------------------------------------------------
+   RESTORE LANGUAGE
+--------------------------------------------------------- */
+
+let savedLanguage = "en";
+
+try {
+
+  savedLanguage =
+    localStorage.getItem(
+      "aquib-language"
+    ) || "en";
+
+} catch (error) {
+
+  savedLanguage = "en";
+
+}
+
+setLanguage(savedLanguage);
+
+
+/* ---------------------------------------------------------
+   LOGO FALLBACK
+--------------------------------------------------------- */
+
+$$("img").forEach(image => {
+
+  image.addEventListener("error", () => {
+
+    image.style.display = "none";
+
+    const parent =
+      image.parentElement;
+
+    if (!parent) return;
+
+    if (
+      parent.classList.contains("maaden-brand") ||
+      parent.classList.contains("maaden-strip")
+    ) {
+
+      const fallback =
+        document.createElement("strong");
+
+      fallback.textContent =
+        "MA'ADEN";
+
+      fallback.style.color =
+        "#b4ef5a";
+
+      fallback.style.fontSize =
+        "20px";
+
+      parent.appendChild(fallback);
+
+    }
+
+    if (
+      parent.classList.contains("dra-brand") ||
+      parent.classList.contains("dra-strip")
+    ) {
+
+      const fallback =
+        document.createElement("strong");
+
+      fallback.textContent =
+        "DRA GLOBAL";
+
+      fallback.style.color =
+        "#111";
+
+      fallback.style.fontSize =
+        "17px";
+
+      parent.appendChild(fallback);
+
+    }
+
+  });
+
+});
+
+
+/* ---------------------------------------------------------
+   ACTIVE NAVIGATION
+--------------------------------------------------------- */
+
+const sections =
+  $$("main section[id]");
+
+const navLinks =
+  $$(".desktop-nav a");
+
+if ("IntersectionObserver" in window) {
+
+  const navObserver =
+    new IntersectionObserver(
       entries => {
 
         entries.forEach(entry => {
 
-          if (!entry.isIntersecting) return;
+          if (!entry.isIntersecting)
+            return;
 
-          const id = entry.target.id;
+          const id =
+            entry.target.id;
 
           navLinks.forEach(link => {
 
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") === `#${id}`
-            );
+            link.style.color = "";
+
+            if (
+              link.getAttribute("href") ===
+              `#${id}`
+            ) {
+
+              link.style.color =
+                "var(--green)";
+
+            }
 
           });
 
@@ -267,237 +457,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
       },
       {
-        rootMargin: "-35% 0px -55% 0px",
-        threshold: 0
+        threshold: .25,
+        rootMargin: "-20% 0px -60% 0px"
       }
     );
 
-    sections.forEach(section => {
-      navObserver.observe(section);
-    });
-  }
 
-
-  /* =======================================================
-     HSE FILTERS
-     ======================================================= */
-
-  const filterButtons = $$(".filter-btn");
-  const skillCards = $$(".skill-card");
-
-  filterButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const filter = button.dataset.filter;
-
-      filterButtons.forEach(item => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
-      skillCards.forEach(card => {
-
-        const category = card.dataset.category;
-
-        const shouldShow =
-          filter === "all" ||
-          category === filter;
-
-        card.classList.toggle(
-          "hidden",
-          !shouldShow
-        );
-
-      });
-
-    });
-
+  sections.forEach(section => {
+    navObserver.observe(section);
   });
 
+}
 
-  /* =======================================================
-     LANGUAGE SWITCHER
-     ======================================================= */
 
-  const languageButtons = $$(".lang-btn");
+/* ---------------------------------------------------------
+   CLOSE MOBILE MENU ON ESC
+--------------------------------------------------------- */
 
-  const translatableElements =
-    $$("[data-en][data-ar]");
+document.addEventListener(
+  "keydown",
+  event => {
 
-  const setLanguage = language => {
+    if (
+      event.key === "Escape" &&
+      mobileMenu
+    ) {
 
-    const isArabic = language === "ar";
-
-    document.documentElement.lang =
-      isArabic ? "ar" : "en";
-
-    document.documentElement.dir =
-      isArabic ? "rtl" : "ltr";
-
-    translatableElements.forEach(element => {
-
-      const translation =
-        isArabic
-          ? element.dataset.ar
-          : element.dataset.en;
-
-      if (translation) {
-        element.textContent = translation;
-      }
-
-    });
-
-    languageButtons.forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.lang === language
+      mobileMenu.classList.remove(
+        "open"
       );
 
-    });
-
-    try {
-      localStorage.setItem(
-        "aquib-language",
-        language
-      );
-    } catch (error) {
-      /* localStorage may be unavailable */
-    }
-  };
-
-
-  languageButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const language =
-        button.dataset.lang || "en";
-
-      setLanguage(language);
-    });
-
-  });
-
-
-  /* Load saved language */
-
-  let savedLanguage = "en";
-
-  try {
-
-    const stored =
-      localStorage.getItem("aquib-language");
-
-    if (stored === "ar" || stored === "en") {
-      savedLanguage = stored;
     }
 
-  } catch (error) {
-    /* Ignore storage errors */
   }
-
-  setLanguage(savedLanguage);
-
-
-  /* =======================================================
-     LOGO FALLBACK
-     ======================================================= */
-
-  $$("img").forEach(image => {
-
-    image.addEventListener("error", () => {
-
-      image.style.display = "none";
-
-      const fallback =
-        image.parentElement?.querySelector(".logo-fallback");
-
-      if (fallback) {
-        fallback.style.display = "block";
-      }
-
-    });
-
-  });
+);
 
 
-  /* =======================================================
-     CLOSE MOBILE MENU ON ESC
-     ======================================================= */
+/* ---------------------------------------------------------
+   SAFETY FALLBACK
+--------------------------------------------------------- */
 
-  document.addEventListener("keydown", event => {
+window.addEventListener(
+  "error",
+  event => {
 
-    if (event.key !== "Escape") return;
+    /*
+      A JavaScript error should never make
+      the website invisible.
+    */
 
-    if (!mobileNav || !menuToggle) return;
-
-    mobileNav.classList.remove("open");
-    menuToggle.classList.remove("active");
-
-    menuToggle.setAttribute(
-      "aria-expanded",
-      "false"
+    console.warn(
+      "Website script warning:",
+      event.message
     );
 
-    document.body.classList.remove("menu-open");
-  });
-
-
-  /* =======================================================
-     SMOOTH ANCHOR FALLBACK
-     ======================================================= */
-
-  $$('a[href^="#"]').forEach(link => {
-
-    link.addEventListener("click", event => {
-
-      const targetId =
-        link.getAttribute("href");
-
-      if (!targetId || targetId === "#") return;
-
-      const target =
-        document.querySelector(targetId);
-
-      if (!target) return;
-
-      event.preventDefault();
-
-      target.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        block: "start"
-      });
-
-    });
-
-  });
-
-
-  /* =======================================================
-     IMAGE LAZY LOAD SAFETY
-     ======================================================= */
-
-  $$("img[loading='lazy']").forEach(image => {
-
-    image.setAttribute(
-      "decoding",
-      "async"
-    );
-
-  });
-
-
-  /* =======================================================
-     CONSOLE MESSAGE
-     ======================================================= */
-
-  console.log(
-    "%cAQUIB.%c Industrial HSE / Operations / Planning",
-    "color:#c9e86b;font-weight:800;font-size:16px;",
-    "color:#87988f;font-size:12px;"
-  );
-
-});
+  }
+);
