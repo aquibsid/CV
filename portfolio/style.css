@@ -1,0 +1,468 @@
+/* GLOBAL STYLES (colours, fonts, page width) */
+/* Colours are defined once at the top as variables (e.g. --amb is the amber colour). Change them here. */
+
+:root {
+  --bg:#f6f6f4;
+  --fg:#1b1d1f;
+  --card:#fff;
+  --mut:#5b6168;
+  --line:#d9dbdc;
+  --dark:#1e2124;
+  --amb:#d99a00;
+  --grn:#2f7d4f;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme=light]) {
+    --bg:#15171a;
+    --fg:#ecedee;
+    --card:#1e2124;
+    --mut:#a3a9af;
+    --line:#34383d;
+  }
+}
+:root[data-theme=dark] {
+  --bg:#15171a;
+  --fg:#ecedee;
+  --card:#1e2124;
+  --mut:#a3a9af;
+  --line:#34383d;
+}
+:root {
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(64px + env(safe-area-inset-top,0px));
+}
+*,*:before,*:after {
+  box-sizing:inherit;
+}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+a {
+  color:inherit;
+}
+:focus-visible {
+  outline:3px solid var(--amb);
+  outline-offset:2px;
+}
+@media (prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior:auto;
+  }
+  * {
+    animation:none!important;
+    transition:none!important;
+  }
+}
+.w {
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* ===== NAVIGATION (sticky top bar, language buttons, mobile menu button) ===== */
+nav {
+  position:sticky;
+  top:env(safe-area-inset-top,0px);
+  z-index:9;
+  background:var(--dark);
+  color:#fff;
+}
+nav .w {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:56px;
+}
+nav b {
+  font-size:15px;
+  letter-spacing:.04em;
+}
+nav ul {
+  display:flex;
+  gap:2px;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+nav a {
+  display:block;
+  padding:8px 8px;
+  font-size:14px;
+  text-decoration:none;
+  color:#c9cdd1;
+  border-bottom:2px solid transparent;
+}
+nav a.on {
+  color:#fff;
+  border-color:var(--amb);
+}
+.lang {
+  display:flex;
+  gap:4px;
+  margin-inline-start:auto;
+  margin-inline-end:10px;
+}
+.lang button {
+  background:none;
+  border:1px solid #555;
+  color:#c9cdd1;
+  padding:5px 9px;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+}
+.lang button[aria-pressed=true] {
+  background:var(--amb);
+  border-color:var(--amb);
+  color:#1b1d1f;
+  font-weight:700;
+}
+[dir=rtl] body {
+  font-family:"Segoe UI",Tahoma,system-ui,sans-serif;
+}
+#mb {
+  display:none;
+  background:none;
+  border:1px solid #555;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:6px;
+}
+.skip {
+  position:absolute;
+  left:0;
+  top:0;
+  transform:translateY(-200%);
+  background:var(--amb);
+  color:#1b1d1f;
+  padding:8px 14px;
+  z-index:30;
+}
+.skip:focus {
+  transform:none;
+}
+#prog {
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  background:var(--amb);
+  width:0;
+  z-index:20;
+}
+
+/* ===== HERO (first screen) ===== */
+header.hero {
+  background:var(--dark);
+  color:#fff;
+  padding:72px 0 56px;
+  border-bottom:4px solid var(--amb);
+}
+.eyebrow {
+  color:var(--amb);
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-size:13px;
+}
+h1 {
+  font-size:clamp(34px,7vw,60px);
+  line-height:1.08;
+  margin:10px 0 6px;
+}
+.hero h2 {
+  font-size:clamp(18px,3vw,24px);
+  font-weight:500;
+  color:#c9cdd1;
+  margin:0 0 18px;
+}
+.hero p {
+  max-width:680px;
+  color:#d6d9dc;
+}
+.btns {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:24px;
+}
+.b {
+  display:inline-block;
+  padding:11px 18px;
+  border-radius:6px;
+  border:1px solid #6a7076;
+  text-decoration:none;
+  font-weight:600;
+  font-size:15px;
+  color:inherit;
+}
+.b.p {
+  background:var(--amb);
+  border-color:var(--amb);
+  color:#1b1d1f;
+}
+.chips {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:22px;
+  font-size:13px;
+}
+.chips span {
+  border:1px solid #555;
+  padding:4px 10px;
+  border-radius:99px;
+  color:#d6d9dc;
+}
+
+/* ===== STATS (the four number boxes under the hero) ===== */
+.stats {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:-28px;
+  position:relative;
+}
+.stat {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-top:3px solid var(--grn);
+  padding:16px;
+  border-radius:6px;
+}
+.stat b {
+  display:block;
+  font-size:30px;
+}
+.stat span {
+  font-size:13px;
+  color:var(--mut);
+}
+
+/* ===== ABOUT - and shared section styles (also used by HSE, OPERATIONS, TURNAROUND, PROJECTS, CERTIFICATIONS) ===== */
+section {
+  padding:56px 0;
+}
+section h2.t {
+  font-size:28px;
+  margin:0 0 6px;
+}
+.sub {
+  color:var(--mut);
+  margin:0 0 24px;
+  max-width:700px;
+}
+
+/* ===== CARDS (the boxes used in HSE, OPERATIONS, PROJECTS, CERTIFICATIONS) ===== */
+.g {
+  display:grid;
+  gap:14px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+.c {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:18px;
+}
+.c h3 {
+  margin:0 0 6px;
+  font-size:17px;
+}
+.c p {
+  margin:0;
+  color:var(--mut);
+  font-size:15px;
+}
+.tag {
+  display:inline-block;
+  font-size:12px;
+  padding:2px 8px;
+  border-radius:4px;
+  background:var(--line);
+  margin:2px 2px 0 0;
+}
+.tag.a {
+  background:var(--amb);
+  color:#1b1d1f;
+  font-weight:700;
+}
+.tag.n {
+  background:var(--grn);
+  color:#fff;
+}
+
+/* ===== EXPERIENCE - career timeline ===== */
+.tl {
+  border-inline-start:3px solid var(--amb);
+  margin-inline-start:8px;
+  padding-inline-start:20px;
+}
+.tl div {
+  margin-bottom:22px;
+  position:relative;
+}
+.tl div:before {
+  content:"";
+  position:absolute;
+  inset-inline-start:-29px;
+  top:6px;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:var(--dark);
+  border:3px solid var(--amb);
+}
+
+/* ===== EXPERIENCE - expandable job cards ===== */
+details {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:14px 18px;
+  margin-bottom:12px;
+}
+summary {
+  cursor:pointer;
+  font-weight:700;
+}
+details ul {
+  padding-inline-start:20px;
+  color:var(--mut);
+  font-size:15px;
+}
+.alt {
+  background:color-mix(in srgb,var(--line) 35%,transparent);
+}
+
+/* ===== HSE - skill filter buttons and skill lists ===== */
+.tabs {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:16px;
+}
+.tabs button {
+  padding:8px 14px;
+  border-radius:99px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--fg);
+  cursor:pointer;
+  font-size:14px;
+}
+.tabs button[aria-pressed=true] {
+  background:var(--dark);
+  color:#fff;
+  border-color:var(--dark);
+}
+.skill-group span {
+  display:inline-block;
+  margin:4px 6px 4px 0;
+  padding:6px 12px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--card);
+  font-size:14px;
+}
+.note {
+  font-size:13px;
+  color:var(--mut);
+  margin-top:10px;
+}
+
+/* ===== CONTACT and FOOTER ===== */
+footer {
+  background:var(--dark);
+  color:#c9cdd1;
+  padding:28px 0;
+  font-size:14px;
+}
+.ct a.b {
+  border-color:var(--line);
+}
+
+/* ===== COMPANY LOGOS and two-column lists ===== */
+.logos {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:10px 0;
+}
+.logo {
+  border:1px dashed var(--mut);
+  border-radius:4px;
+  padding:6px 12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  min-height:36px;
+}
+.logo img {
+  max-height:28px;
+  width:auto;
+}
+.logo.dk {
+  background:#1e2124;
+  border:1px solid #1e2124;
+}
+.logo.wt {
+  background:#fff;
+  border:1px solid var(--line);
+}
+.logo img {
+  height:28px;
+  width:auto;
+  display:block;
+}
+.logo img.tl-logo {
+  height:40px;
+}
+.two {
+  columns:2 260px;
+  column-gap:28px;
+}
+.two li {
+  break-inside:avoid;
+  margin-bottom:4px;
+}
+
+/* ===== HSE - skill groups (work without JavaScript too) ===== */
+.skill-group h4 { margin: 18px 0 6px; font-size: 15px; color: var(--mut); }
+.js .skill-group h4 { display: none; }
+.skill-group[hidden] { display: none; }
+
+/* ===== RESPONSIVE DESIGN (phones and tablets) ===== */
+@media (max-width:1100px) {
+  #mb {
+    display:block;
+  }
+  nav ul {
+    display:none;
+    position:absolute;
+    top:56px;
+    left:0;
+    right:0;
+    background:var(--dark);
+    flex-direction:column;
+    padding:8px 20px 16px;
+  }
+  nav ul.open {
+    display:flex;
+  }
+}
+@media (max-width:700px) {
+  .stats {
+    grid-template-columns:1fr 1fr;
+  }
+}
