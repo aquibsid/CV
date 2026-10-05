@@ -1,542 +1,503 @@
-const categories = {
+/* =========================================================
+   AQUIB CV WEBSITE
+   Main interactions
+   ========================================================= */
 
-  "HSE": [
-    "Risk assessment",
-    "JSA",
-    "Permit to Work",
-    "LOTO",
-    "Isolation control",
-    "Confined space",
-    "Hot work",
-    "Work at height",
-    "Incident & near-miss reporting",
-    "Emergency response",
-    "Contractor safety",
-    "Safety inspections",
-    "Behavior-based safety",
-    "Toolbox talks",
-    "RCA support"
-  ],
+document.documentElement.classList.add("js-ready");
 
-  "Plant Operations": [
-    "Power plant operation",
-    "Alarm handling",
-    "Startup / shutdown",
-    "Abnormal operations",
-    "Utility systems",
-    "Maintenance coordination"
-  ],
+document.addEventListener("DOMContentLoaded", () => {
 
-  "Process Control": [
-    "Yokogawa CENTUM VP",
-    "ProSafe-RS",
-    "Siemens S7-1500",
-    "STARDOM PLC",
-    "SCADA",
-    "Wonderware / InTouch",
-    "Foundation Fieldbus",
-    "DCS",
-    "SIS",
-    "PLC",
-    "ESD"
-  ],
+  const $ = (selector, parent = document) =>
+    parent.querySelector(selector);
 
-  "Shutdown / Turnaround": [
-    "LDPE / HDPE",
-    "Shutdown coordination",
-    "Contractor interfaces",
-    "Planned vs actual",
-    "Progress tracking"
-  ],
-
-  "Planning": [
-    "Primavera P6",
-    "WBS",
-    "Critical path",
-    "Look-ahead planning",
-    "Progress reporting"
-  ],
-
-  "Data & Reporting": [
-    "Advanced Excel",
-    "Power BI",
-    "Safety observation tracking",
-    "Incident trend analysis",
-    "Corrective action tracking",
-    "Management reporting"
-  ]
-
-};
+  const $$ = (selector, parent = document) =>
+    [...parent.querySelectorAll(selector)];
 
 
-/* LANGUAGE */
+  /* =======================================================
+     CURRENT YEAR
+     ======================================================= */
 
-const translations = {
+  const yearElement = $("#currentYear");
 
-  "Skip to content": "تخطَّ إلى المحتوى",
-  "About": "نبذة",
-  "Experience": "الخبرة",
-  "Operations": "التشغيل",
-  "Projects": "المشاريع",
-  "Education": "التعليم",
-  "Credentials": "المؤهلات",
-  "Contact": "تواصل",
-  "Menu": "القائمة",
-
-  "SAUDI ARABIA · INDUSTRIAL HSE":
-    "المملكة العربية السعودية · السلامة الصناعية",
-
-  "HSE Officer · Industrial Safety · Process Operations":
-    "مسؤول HSE · السلامة الصناعية · تشغيل العمليات",
-
-  "COMPLETED":
-    "مكتملة",
-
-  "IN PROGRESS":
-    "قيد الدراسة"
-
-};
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
 
 
-/* HELPERS */
+  /* =======================================================
+     MOBILE MENU
+     ======================================================= */
 
-const $ = selector =>
-  document.querySelector(selector);
+  const menuToggle = $("#menuToggle");
+  const mobileNav = $("#mobileNav");
 
-const $$ = selector =>
-  document.querySelectorAll(selector);
+  if (menuToggle && mobileNav) {
 
+    menuToggle.addEventListener("click", () => {
 
-/* SKILLS */
+      const isOpen = mobileNav.classList.toggle("open");
 
-function initSkills() {
+      menuToggle.classList.toggle("active", isOpen);
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
 
-  const filter = $("#filter");
-  const skills = $("#skills");
-
-  Object.keys(categories).forEach(name => {
-
-    const button = document.createElement("button");
-
-    button.textContent = name;
-    button.type = "button";
-
-    button.addEventListener("click", () => {
-      showSkills(name);
+      document.body.classList.toggle("menu-open", isOpen);
     });
 
-    filter.appendChild(button);
 
-  });
+    $$("#mobileNav a").forEach(link => {
 
+      link.addEventListener("click", () => {
 
-  function showSkills(name) {
+        mobileNav.classList.remove("open");
+        menuToggle.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
 
-    filter
-      .querySelectorAll("button")
-      .forEach(button => {
-
-        button.classList.toggle(
-          "active",
-          button.textContent === name
-        );
-
+        document.body.classList.remove("menu-open");
       });
 
+    });
+  }
 
-    skills.innerHTML = "";
+
+  /* =======================================================
+     SCROLL PROGRESS
+     ======================================================= */
+
+  const scrollProgress = $("#scrollProgress");
+
+  const updateScrollProgress = () => {
+
+    if (!scrollProgress) return;
+
+    const scrollTop = window.scrollY;
+
+    const documentHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    const progress =
+      documentHeight > 0
+        ? (scrollTop / documentHeight) * 100
+        : 0;
+
+    scrollProgress.style.width = `${progress}%`;
+  };
+
+  window.addEventListener("scroll", updateScrollProgress, {
+    passive: true
+  });
+
+  updateScrollProgress();
 
 
-    categories[name].forEach((skill, index) => {
+  /* =======================================================
+     HEADER SHADOW
+     ======================================================= */
 
-      const span = document.createElement("span");
+  const header = $("#siteHeader");
 
-      span.textContent = skill;
+  const updateHeader = () => {
 
-      span.style.animationDelay =
-        `${index * 18}ms`;
+    if (!header) return;
 
-      skills.appendChild(span);
+    header.classList.toggle(
+      "scrolled",
+      window.scrollY > 20
+    );
+  };
 
+  window.addEventListener("scroll", updateHeader, {
+    passive: true
+  });
+
+  updateHeader();
+
+
+  /* =======================================================
+     SCROLL REVEAL
+     ======================================================= */
+
+  const revealElements = $$(".reveal");
+
+  const reducedMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reducedMotion) {
+
+    revealElements.forEach(element => {
+      element.classList.add("visible");
+    });
+
+  } else if ("IntersectionObserver" in window) {
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+
+        entries.forEach(entry => {
+
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("visible");
+
+          observer.unobserve(entry.target);
+        });
+
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+
+    revealElements.forEach(element => {
+      revealObserver.observe(element);
+    });
+
+  } else {
+
+    revealElements.forEach(element => {
+      element.classList.add("visible");
     });
 
   }
 
 
-  showSkills(Object.keys(categories)[0]);
+  /* =======================================================
+     COUNTERS
+     ======================================================= */
 
-}
+  const counters = $$(".counter");
 
+  const animateCounter = element => {
 
-/* MOBILE MENU */
+    const target = Number(element.dataset.target || 0);
+    const suffix = element.dataset.suffix || "";
 
-function initMenu() {
-
-  const button = $("#menuBtn");
-  const menu = $("#menu");
-
-  button.addEventListener("click", () => {
-
-    const open =
-      menu.classList.toggle("open");
-
-    button.setAttribute(
-      "aria-expanded",
-      open
-    );
-
-  });
-
-
-  menu.addEventListener("click", event => {
-
-    if (event.target.matches("a")) {
-
-      menu.classList.remove("open");
-
-      button.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
+    if (reducedMotion) {
+      element.textContent = `${target}${suffix}`;
+      return;
     }
 
-  });
+    const duration = 1200;
+    const startTime = performance.now();
 
-}
+    const update = currentTime => {
 
-
-/* SCROLL PROGRESS + ACTIVE NAV */
-
-function initScroll() {
-
-  const progress = $("#progress");
-
-  const links =
-    [...$$("nav a[href^='#']")];
-
-
-  function update() {
-
-    const documentElement =
-      document.documentElement;
-
-
-    const scrollPercent =
-      scrollY /
-      (documentElement.scrollHeight - innerHeight) *
-      100;
-
-
-    progress.style.width =
-      `${Math.min(100, scrollPercent)}%`;
-
-
-    let current = "#home";
-
-
-    $$("main section[id], header[id]")
-      .forEach(section => {
-
-        if (
-          section.getBoundingClientRect().top < 140
-        ) {
-
-          current =
-            `#${section.id}`;
-
-        }
-
-      });
-
-
-    links.forEach(link => {
-
-      link.classList.toggle(
-        "active",
-        link.getAttribute("href") === current
-      );
-
-    });
-
-  }
-
-
-  addEventListener(
-    "scroll",
-    update,
-    { passive: true }
-  );
-
-
-  update();
-
-}
-
-
-/* SCROLL REVEAL */
-
-function initReveal() {
-
-  const items =
-    $$(".reveal");
-
-
-  if (!("IntersectionObserver" in window)) {
-
-    items.forEach(item => {
-      item.classList.add("visible");
-    });
-
-    return;
-  }
-
-
-  const observer =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-
-            entry.target.classList.add("visible");
-
-            observer.unobserve(
-              entry.target
-            );
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.12
-      }
-    );
-
-
-  items.forEach(item => {
-
-    observer.observe(item);
-
-  });
-
-}
-
-
-/* NUMBER COUNTERS */
-
-function initCounters() {
-
-  const elements =
-    $$("[data-count]");
-
-
-  if (!("IntersectionObserver" in window)) {
-
-    elements.forEach(element => {
-
-      setCounter(element);
-
-    });
-
-    return;
-  }
-
-
-  const observer =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-
-            setCounter(entry.target);
-
-            observer.unobserve(
-              entry.target
-            );
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.7
-      }
-    );
-
-
-  elements.forEach(element => {
-
-    observer.observe(element);
-
-  });
-
-
-  function setCounter(element) {
-
-    const target =
-      Number(element.dataset.count);
-
-    const suffix =
-      element.dataset.suffix || "";
-
-
-    let start = 0;
-
-    const duration = 900;
-
-    const startTime =
-      performance.now();
-
-
-    function tick(now) {
-
-      const progress =
-        Math.min(
-          1,
-          (now - startTime) / duration
-        );
-
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
 
       const eased =
         1 - Math.pow(1 - progress, 3);
 
+      const current =
+        Math.round(target * eased);
 
-      const value =
-        Math.round(
-          start +
-          (target - start) * eased
-        );
-
-
-      element.textContent =
-        `${value}${suffix}`;
-
+      element.textContent = `${current}${suffix}`;
 
       if (progress < 1) {
-
-        requestAnimationFrame(tick);
-
+        requestAnimationFrame(update);
       }
 
-    }
+    };
+
+    requestAnimationFrame(update);
+  };
 
 
-    requestAnimationFrame(tick);
+  if ("IntersectionObserver" in window) {
+
+    const counterObserver = new IntersectionObserver(
+      entries => {
+
+        entries.forEach(entry => {
+
+          if (!entry.isIntersecting) return;
+
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        });
+
+      },
+      {
+        threshold: .7
+      }
+    );
+
+    counters.forEach(counter => {
+      counterObserver.observe(counter);
+    });
+
+  } else {
+
+    counters.forEach(counter => {
+      animateCounter(counter);
+    });
 
   }
 
-}
 
+  /* =======================================================
+     ACTIVE NAVIGATION
+     ======================================================= */
 
-/* LANGUAGE SWITCH */
+  const sections = $$("main section[id]");
+  const navLinks = $$(".desktop-nav a");
 
-function initLanguage() {
+  if ("IntersectionObserver" in window) {
 
-  const buttons =
-    $$(".lang");
+    const navObserver = new IntersectionObserver(
+      entries => {
 
+        entries.forEach(entry => {
 
-  buttons.forEach(button => {
+          if (!entry.isIntersecting) return;
 
-    button.addEventListener(
-      "click",
-      () => {
+          const id = entry.target.id;
 
-        const language =
-          button.dataset.lang;
+          navLinks.forEach(link => {
 
+            link.classList.toggle(
+              "active",
+              link.getAttribute("href") === `#${id}`
+            );
 
-        document.documentElement.lang =
-          language;
-
-
-        document.documentElement.dir =
-          language === "ar"
-            ? "rtl"
-            : "ltr";
-
-
-        buttons.forEach(item => {
-
-          item.classList.toggle(
-            "active",
-            item === button
-          );
+          });
 
         });
 
-
-        $$("body *").forEach(element => {
-
-          if (element.children.length === 0) {
-
-            const original =
-              element.dataset.en ||
-              element.textContent.trim();
-
-
-            if (translations[original]) {
-
-              element.dataset.en =
-                original;
-
-
-              element.textContent =
-                language === "ar"
-                  ? translations[original]
-                  : original;
-
-            }
-
-          }
-
-        });
-
-
-        try {
-
-          localStorage.setItem(
-            "aquib-lang",
-            language
-          );
-
-        } catch (error) {}
-
+      },
+      {
+        rootMargin: "-35% 0px -55% 0px",
+        threshold: 0
       }
+    );
+
+    sections.forEach(section => {
+      navObserver.observe(section);
+    });
+  }
+
+
+  /* =======================================================
+     HSE FILTERS
+     ======================================================= */
+
+  const filterButtons = $$(".filter-btn");
+  const skillCards = $$(".skill-card");
+
+  filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const filter = button.dataset.filter;
+
+      filterButtons.forEach(item => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      skillCards.forEach(card => {
+
+        const category = card.dataset.category;
+
+        const shouldShow =
+          filter === "all" ||
+          category === filter;
+
+        card.classList.toggle(
+          "hidden",
+          !shouldShow
+        );
+
+      });
+
+    });
+
+  });
+
+
+  /* =======================================================
+     LANGUAGE SWITCHER
+     ======================================================= */
+
+  const languageButtons = $$(".lang-btn");
+
+  const translatableElements =
+    $$("[data-en][data-ar]");
+
+  const setLanguage = language => {
+
+    const isArabic = language === "ar";
+
+    document.documentElement.lang =
+      isArabic ? "ar" : "en";
+
+    document.documentElement.dir =
+      isArabic ? "rtl" : "ltr";
+
+    translatableElements.forEach(element => {
+
+      const translation =
+        isArabic
+          ? element.dataset.ar
+          : element.dataset.en;
+
+      if (translation) {
+        element.textContent = translation;
+      }
+
+    });
+
+    languageButtons.forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.lang === language
+      );
+
+    });
+
+    try {
+      localStorage.setItem(
+        "aquib-language",
+        language
+      );
+    } catch (error) {
+      /* localStorage may be unavailable */
+    }
+  };
+
+
+  languageButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const language =
+        button.dataset.lang || "en";
+
+      setLanguage(language);
+    });
+
+  });
+
+
+  /* Load saved language */
+
+  let savedLanguage = "en";
+
+  try {
+
+    const stored =
+      localStorage.getItem("aquib-language");
+
+    if (stored === "ar" || stored === "en") {
+      savedLanguage = stored;
+    }
+
+  } catch (error) {
+    /* Ignore storage errors */
+  }
+
+  setLanguage(savedLanguage);
+
+
+  /* =======================================================
+     LOGO FALLBACK
+     ======================================================= */
+
+  $$("img").forEach(image => {
+
+    image.addEventListener("error", () => {
+
+      image.style.display = "none";
+
+      const fallback =
+        image.parentElement?.querySelector(".logo-fallback");
+
+      if (fallback) {
+        fallback.style.display = "block";
+      }
+
+    });
+
+  });
+
+
+  /* =======================================================
+     CLOSE MOBILE MENU ON ESC
+     ======================================================= */
+
+  document.addEventListener("keydown", event => {
+
+    if (event.key !== "Escape") return;
+
+    if (!mobileNav || !menuToggle) return;
+
+    mobileNav.classList.remove("open");
+    menuToggle.classList.remove("active");
+
+    menuToggle.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    document.body.classList.remove("menu-open");
+  });
+
+
+  /* =======================================================
+     SMOOTH ANCHOR FALLBACK
+     ======================================================= */
+
+  $$('a[href^="#"]').forEach(link => {
+
+    link.addEventListener("click", event => {
+
+      const targetId =
+        link.getAttribute("href");
+
+      if (!targetId || targetId === "#") return;
+
+      const target =
+        document.querySelector(targetId);
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      target.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
+
+    });
+
+  });
+
+
+  /* =======================================================
+     IMAGE LAZY LOAD SAFETY
+     ======================================================= */
+
+  $$("img[loading='lazy']").forEach(image => {
+
+    image.setAttribute(
+      "decoding",
+      "async"
     );
 
   });
 
 
-  try {
+  /* =======================================================
+     CONSOLE MESSAGE
+     ======================================================= */
 
-    if (
-      localStorage.getItem("aquib-lang") === "ar"
-    ) {
+  console.log(
+    "%cAQUIB.%c Industrial HSE / Operations / Planning",
+    "color:#c9e86b;font-weight:800;font-size:16px;",
+    "color:#87988f;font-size:12px;"
+  );
 
-      document
-        .querySelector(".lang[data-lang='ar']")
-        .click();
-
-    }
-
-  } catch (error) {}
-
-}
-
-
-/* START */
-
-initSkills();
-initMenu();
-initScroll();
-initReveal();
-initCounters();
-initLanguage();
+});
