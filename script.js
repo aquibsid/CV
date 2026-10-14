@@ -7,6 +7,62 @@
 
 
 /* =========================================================
+   CERTIFICATION CREDENTIAL COPY BUTTONS
+   ========================================================= */
+
+document.addEventListener("click", async function (event) {
+  const button = event.target.closest(".copy-credential");
+
+  if (!button) return;
+
+  const credentialId = button.dataset.copyId;
+  const credentialElement = document.getElementById(credentialId);
+
+  if (!credentialElement) return;
+
+  const value = credentialElement.textContent.trim();
+  const originalText = button.textContent;
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    const success = document.execCommand("copy");
+    textarea.remove();
+
+    if (!success) throw new Error("Copy failed");
+
+    return true;
+  }
+
+  try {
+    await copyText(value);
+    button.textContent = "Copied!";
+  } catch (error) {
+    button.textContent = "Copy failed";
+  }
+
+  button.disabled = true;
+
+  window.setTimeout(function () {
+    button.textContent = originalText;
+    button.disabled = false;
+  }, 1800);
+});
+
+
+/* =========================================================
    DOCUMENT READY
    ========================================================= */
 
