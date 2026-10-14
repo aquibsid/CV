@@ -54,6 +54,22 @@
   white-space: nowrap;
 }
 
+.certification-id .copy-credential {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 0;
+  min-height: 0;
+  align-self: flex-start;
+  padding: 5px 9px;
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 
 /* =========================================================
    RESET
