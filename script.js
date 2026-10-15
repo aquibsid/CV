@@ -1,7 +1,6 @@
-
 "use strict";
 
-/* Enable script-dependent styles */
+/* Mark JavaScript as available */
 document.documentElement.classList.add("js-ready");
 
 const navToggle = document.getElementById("navToggle");
@@ -51,7 +50,9 @@ if (navToggle && siteNav) {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeNavigation();
+    if (event.key === "Escape") {
+      closeNavigation();
+    }
   });
 
   document.addEventListener("click", (event) => {
@@ -63,9 +64,15 @@ if (navToggle && siteNav) {
       closeNavigation();
     }
   });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 900) {
+      closeNavigation();
+    }
+  });
 }
 
-/* Header scroll state */
+/* Header scroll effect */
 function updateHeader() {
   if (siteHeader) {
     siteHeader.classList.toggle("scrolled", window.scrollY > 20);
@@ -84,37 +91,49 @@ if (
   sections.length &&
   navLinks.length
 ) {
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-      navLinks.forEach((link) => link.classList.remove("active"));
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+        });
 
-      const activeLink = document.querySelector(
-        `.site-nav > a[href="#${entry.target.id}"]`
-      );
+        const activeLink = document.querySelector(
+          `.site-nav > a[href="#${entry.target.id}"]`
+        );
 
-      if (activeLink) activeLink.classList.add("active");
-    });
-  }, {
-    rootMargin: "-30% 0px -60% 0px"
+        if (activeLink) {
+          activeLink.classList.add("active");
+        }
+      });
+    },
+    {
+      rootMargin: "-25% 0px -65% 0px"
+    }
+  );
+
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
   });
-
-  sections.forEach((section) => sectionObserver.observe(section));
 }
 
 /* English / Arabic language system */
 function setLanguage(language) {
   const isArabic = language === "ar";
+  const selectedAttribute = isArabic ? "data-ar" : "data-en";
 
   translatableElements.forEach((element) => {
-    const translatedText = element.getAttribute(
-      isArabic ? "data-ar" : "data-en"
-    );
+    const translatedText = element.getAttribute(selectedAttribute);
 
     if (translatedText === null) return;
 
-    /* Preserve nested icons and other HTML */
+    /*
+     * Replace text without deleting nested elements.
+     * Elements containing nested markup are updated through
+     * their first non-empty text node.
+     */
     if (element.children.length > 0) {
       const textNode = Array.from(element.childNodes).find(
         (node) =>
@@ -145,7 +164,7 @@ function setLanguage(language) {
   try {
     localStorage.setItem("aquib-language", language);
   } catch (error) {
-    /* Language switching still works without localStorage */
+    /* Language switching still works if storage is unavailable. */
   }
 }
 
@@ -159,6 +178,7 @@ languageButtons.forEach((button) => {
   });
 });
 
+/* Restore saved language, defaulting to English */
 let savedLanguage = "en";
 
 try {
@@ -168,12 +188,12 @@ try {
     savedLanguage = storedLanguage;
   }
 } catch (error) {
-  /* Default to English */
+  /* Default to English if storage is unavailable. */
 }
 
 setLanguage(savedLanguage);
 
-/* Company logo fallback: Companies and Experience */
+/* Company logo fallback */
 function enableLogoFallback(imageSelector, fallbackSelector) {
   document.querySelectorAll(imageSelector).forEach((image) => {
     const container = image.closest("a") || image.parentElement;
@@ -191,31 +211,40 @@ function enableLogoFallback(imageSelector, fallbackSelector) {
 
     image.addEventListener("error", showFallback);
 
-    if (image.complete && image.naturalWidth === 0) {
+    /*
+     * Handle an image that failed before this script attached
+     * its event listener, without hiding an unloaded lazy image.
+     */
+    if (
+      image.complete &&
+      image.currentSrc &&
+      image.naturalWidth === 0
+    ) {
       showFallback();
     }
   });
 }
 
 enableLogoFallback(".logo-tile img", ".logo-fallback");
+
 enableLogoFallback(
   ".experience-company-logo",
   ".experience-logo-fallback"
 );
 
-/* Copy credential IDs reliably */
+/* Copy credential IDs */
 async function copyTextToClipboard(value) {
-  /* Modern secure-context clipboard API */
+  /* Preferred method on HTTPS and supported browsers */
   if (navigator.clipboard && window.isSecureContext) {
     try {
       await navigator.clipboard.writeText(value);
       return true;
     } catch (error) {
-      /* Try the fallback below */
+      /* Continue to the fallback. */
     }
   }
 
-  /* Fallback for browsers where Clipboard API is unavailable */
+  /* Fallback for browsers without Clipboard API support */
   const textarea = document.createElement("textarea");
 
   textarea.value = value;
@@ -249,7 +278,11 @@ async function copyTextToClipboard(value) {
 }
 
 document.addEventListener("click", async (event) => {
-  const button = event.target.closest(".copy-credential");
+  const target = event.target;
+
+  if (!(target instanceof Element)) return;
+
+  const button = target.closest(".copy-credential");
 
   if (!button || button.disabled) return;
 
@@ -272,7 +305,10 @@ document.addEventListener("click", async (event) => {
 
     if (copied) {
       button.textContent = "Copied!";
-      button.setAttribute("title", "Credential ID copied to clipboard");
+      button.setAttribute(
+        "title",
+        "Credential ID copied to clipboard"
+      );
     } else {
       button.textContent = "Copy unavailable";
       button.setAttribute(
@@ -295,14 +331,7 @@ document.addEventListener("click", async (event) => {
   }, 2200);
 });
 
-/* Close mobile navigation when returning to desktop width */
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 900) {
-    closeNavigation();
-  }
-});
-
-/* Smooth internal links */
+/* Smooth internal navigation */
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
@@ -320,7 +349,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
         "(prefers-reduced-motion: reduce)"
       ).matches
         ? "auto"
-        : "smooth"
+        : "smooth",
+      block: "start"
     });
   });
 });
