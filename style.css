@@ -160,7 +160,13 @@ section { scroll-margin-top: 90px; }
 .system-footer { display: flex; justify-content: space-between; margin-top: 20px; color: var(--soft); font-size: .65rem; font-weight: 800; letter-spacing: .1em; }
 .live-indicator { color: #73d7a0; }
 
-
+.yokogawa-issuer-logo {
+  display: block;
+  width: 76px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
 /* Additional company wordmarks */
 .company-wordmark {
   display: inline-flex;
@@ -171,6 +177,74 @@ section { scroll-margin-top: 90px; }
   font-weight: 900;
   letter-spacing: .04em;
 }
+
+/* Compact, balanced Companies & Technologies section */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.logo-tile {
+  height: 92px;
+  padding: 14px;
+  gap: 8px;
+  border-radius: 10px;
+}
+
+.logo-tile img {
+  width: 100%;
+  max-width: 145px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.logo-fallback[hidden] {
+  display: none !important;
+}
+
+/* One combined Google Cloud tile */
+.google-cloud-tile {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.google-cloud-tile img {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+}
+
+.google-cloud-label {
+  color: var(--text-light);
+  font-size: 0.82rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+@media (max-width: 1050px) {
+  .logo-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .logo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .logo-tile {
+    height: 82px;
+    padding: 10px;
+  }
+
+  .google-cloud-label {
+    font-size: 0.75rem;
+  }
+}
+
 
 .iosh-wordmark {
   color: #edf1f5;
