@@ -1,6 +1,7 @@
+
 "use strict";
 
-/* Add class for scripts-enabled styling */
+/* Enable script-dependent styles */
 document.documentElement.classList.add("js-ready");
 
 const navToggle = document.getElementById("navToggle");
@@ -38,9 +39,11 @@ function openNavigation() {
 
 if (navToggle && siteNav) {
   navToggle.addEventListener("click", () => {
-    siteNav.classList.contains("open")
-      ? closeNavigation()
-      : openNavigation();
+    if (siteNav.classList.contains("open")) {
+      closeNavigation();
+    } else {
+      openNavigation();
+    }
   });
 
   siteNav.querySelectorAll("a").forEach((link) => {
@@ -76,7 +79,11 @@ updateHeader();
 const navLinks = document.querySelectorAll('.site-nav > a[href^="#"]');
 const sections = document.querySelectorAll("main section[id]");
 
-if ("IntersectionObserver" in window && sections.length && navLinks.length) {
+if (
+  "IntersectionObserver" in window &&
+  sections.length &&
+  navLinks.length
+) {
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -96,7 +103,7 @@ if ("IntersectionObserver" in window && sections.length && navLinks.length) {
   sections.forEach((section) => sectionObserver.observe(section));
 }
 
-/* Language system */
+/* English / Arabic language system */
 function setLanguage(language) {
   const isArabic = language === "ar";
 
@@ -107,20 +114,12 @@ function setLanguage(language) {
 
     if (translatedText === null) return;
 
-    /*
-      These attributes are used only on text-bearing elements.
-      Replacing text on the element itself can remove child icons,
-      so skip elements containing non-text child elements.
-    */
-    const hasElementChildren = Array.from(element.children).length > 0;
-
-    if (hasElementChildren) {
-      /*
-        Preserve nested markup and update a dedicated text node only
-        when the element has one. Otherwise, keep its child elements.
-      */
+    /* Preserve nested icons and other HTML */
+    if (element.children.length > 0) {
       const textNode = Array.from(element.childNodes).find(
-        (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+        (node) =>
+          node.nodeType === Node.TEXT_NODE &&
+          node.textContent.trim()
       );
 
       if (textNode) {
@@ -138,6 +137,7 @@ function setLanguage(language) {
 
   languageButtons.forEach((button) => {
     const active = button.getAttribute("data-lang") === language;
+
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", String(active));
   });
@@ -145,112 +145,180 @@ function setLanguage(language) {
   try {
     localStorage.setItem("aquib-language", language);
   } catch (error) {
-    /* Storage may be unavailable; language still changes for this page view. */
+    /* Language switching still works without localStorage */
   }
 }
 
 languageButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const language = button.getAttribute("data-lang");
-    if (language === "en" || language === "ar") setLanguage(language);
+
+    if (language === "en" || language === "ar") {
+      setLanguage(language);
+    }
   });
 });
 
 let savedLanguage = "en";
+
 try {
   const storedLanguage = localStorage.getItem("aquib-language");
+
   if (storedLanguage === "en" || storedLanguage === "ar") {
     savedLanguage = storedLanguage;
   }
 } catch (error) {
-  /* Use English if storage is unavailable. */
+  /* Default to English */
 }
 
 setLanguage(savedLanguage);
 
-/* Logo fallbacks */
-document.querySelectorAll(".logo-tile").forEach((tile) => {
-  const image = tile.querySelector("img");
-  const fallback = tile.querySelector(".logo-fallback");
+/* Company logo fallback: Companies and Experience */
+function enableLogoFallback(imageSelector, fallbackSelector) {
+  document.querySelectorAll(imageSelector).forEach((image) => {
+    const container = image.closest("a") || image.parentElement;
+    const fallback = container
+      ? container.querySelector(fallbackSelector)
+      : null;
 
-  if (!image || !fallback) return;
+    function showFallback() {
+      image.hidden = true;
 
-  function showFallback() {
-    image.style.display = "none";
-    fallback.hidden = false;
-  }
-
-  image.addEventListener("error", showFallback);
-
-  if (image.complete && image.naturalWidth === 0) {
-    showFallback();
-  }
-});
-
-/* Copy credential IDs */
-document.addEventListener("click", async (event) => {
-  const button = event.target.closest(".copy-credential");
-  if (!button) return;
-
-  const value = button.dataset.copyValue;
-  if (!value) return;
-
-  const originalText = button.textContent;
-
-  async function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
+      if (fallback) {
+        fallback.hidden = false;
+      }
     }
 
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
+    image.addEventListener("error", showFallback);
 
-    document.body.appendChild(textarea);
-    textarea.select();
+    if (image.complete && image.naturalWidth === 0) {
+      showFallback();
+    }
+  });
+}
 
-    const success = document.execCommand("copy");
-    textarea.remove();
+enableLogoFallback(".logo-tile img", ".logo-fallback");
+enableLogoFallback(
+  ".experience-company-logo",
+  ".experience-logo-fallback"
+);
 
-    if (!success) throw new Error("Copy failed");
+/* Copy credential IDs reliably */
+async function copyTextToClipboard(value) {
+  /* Modern secure-context clipboard API */
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return true;
+    } catch (error) {
+      /* Try the fallback below */
+    }
   }
+
+  /* Fallback for browsers where Clipboard API is unavailable */
+  const textarea = document.createElement("textarea");
+
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.setAttribute("aria-hidden", "true");
+
+  textarea.style.position = "fixed";
+  textarea.style.top = "0";
+  textarea.style.left = "-9999px";
+  textarea.style.width = "1px";
+  textarea.style.height = "1px";
+  textarea.style.opacity = "0";
+
+  document.body.appendChild(textarea);
+
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+
+  let copied = false;
 
   try {
-    await copyText(value);
-    button.textContent = "Copied!";
+    copied = document.execCommand("copy");
   } catch (error) {
-    button.textContent = "Copy failed";
+    copied = false;
+  } finally {
+    textarea.remove();
   }
 
+  return copied;
+}
+
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest(".copy-credential");
+
+  if (!button || button.disabled) return;
+
+  const value = button.dataset.copyValue;
+
+  if (!value) {
+    button.textContent = "No ID available";
+    return;
+  }
+
+  const originalText =
+    button.dataset.originalLabel || button.textContent.trim();
+
+  button.dataset.originalLabel = originalText;
   button.disabled = true;
+  button.setAttribute("aria-live", "polite");
+
+  try {
+    const copied = await copyTextToClipboard(value);
+
+    if (copied) {
+      button.textContent = "Copied!";
+      button.setAttribute("title", "Credential ID copied to clipboard");
+    } else {
+      button.textContent = "Copy unavailable";
+      button.setAttribute(
+        "title",
+        "Copy failed. Please select and copy the credential ID manually."
+      );
+    }
+  } catch (error) {
+    button.textContent = "Copy unavailable";
+    button.setAttribute(
+      "title",
+      "Copy failed. Please copy the credential ID manually."
+    );
+  }
 
   window.setTimeout(() => {
     button.textContent = originalText;
     button.disabled = false;
-  }, 1800);
+    button.removeAttribute("title");
+  }, 2200);
 });
 
-/* Close mobile menu after returning to desktop width */
+/* Close mobile navigation when returning to desktop width */
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 900) closeNavigation();
+  if (window.innerWidth > 900) {
+    closeNavigation();
+  }
 });
 
 /* Smooth internal links */
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
+
     if (!targetId || targetId === "#") return;
 
     const target = document.querySelector(targetId);
+
     if (!target) return;
 
     event.preventDefault();
 
     target.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      behavior: window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
         ? "auto"
         : "smooth"
     });
