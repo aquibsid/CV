@@ -160,6 +160,94 @@ section { scroll-margin-top: 90px; }
 .system-footer { display: flex; justify-content: space-between; margin-top: 20px; color: var(--soft); font-size: .65rem; font-weight: 800; letter-spacing: .1em; }
 .live-indicator { color: #73d7a0; }
 
+
+/* Additional company wordmarks */
+.company-wordmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.55rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.iosh-wordmark {
+  color: #edf1f5;
+}
+
+.osha-wordmark {
+  color: #73b9ef;
+}
+
+.nebosh-wordmark {
+  color: #d8ae52;
+  font-size: 1.3rem;
+}
+
+/* Experience company logos */
+.experience-logos {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.experience-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  min-height: 54px;
+  max-width: 135px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .025);
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.experience-logo-link:hover {
+  border-color: rgba(216, 174, 82, .6);
+  transform: translateY(-2px);
+}
+
+.experience-company-logo {
+  display: block;
+  width: 100%;
+  max-width: 115px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.experience-logo-fallback {
+  color: var(--gold-light);
+  font-size: .7rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .experience-top {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .experience-logos {
+    justify-content: flex-start;
+  }
+
+  .experience-logo-link {
+    min-width: 80px;
+    min-height: 48px;
+  }
+
+  .experience-company-logo {
+    height: 32px;
+  }
+}
 /* Company logos */
 .companies, .certifications, .contact { border-top: 1px solid var(--line-soft); }
 .logo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
